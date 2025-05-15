@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: "Montserrat SemiBold";
     src:
@@ -37,7 +38,7 @@ body {
 }
 
 .title {
-    font-family: 'Montserrat SemiBold';
+    font-family: 'Montserrat SemiBold', sans-serif;
     font-weight: 600px;
     font-size: 64px;
     color: #1B4E9B;
@@ -63,7 +64,7 @@ body {
     color: #1B4E9B;
     margin: 0;
     font-size: 28px;
-    font-family: 'Montserrat SemiBold';
+    font-family: 'Montserrat SemiBold', sans-serif;
     font-weight: 600px;
 }
 
@@ -76,7 +77,7 @@ body {
     color: #1B4E9B;
     margin: 0;
     font-size: 28px;
-    font-family: 'Montserrat SemiBold';
+    font-family: 'Montserrat SemiBold', sans-serif;
     font-weight: 600px;
 }
 
@@ -95,7 +96,7 @@ body {
     border-color: transparent;
     border-radius: 2rem;
     font-size: 32px;
-    font-family: 'Montserrat SemiBold';
+    font-family: 'Montserrat SemiBold', sans-serif;
     font-weight: 600px;
     margin: 46px;
     }
@@ -109,14 +110,15 @@ body {
     width: 124.38px;
     height: 120.86px;
     margin-left: 75px;
-    margin-bottom: 1px;
+    margin-top: 317px;
 }
 
 .ellipse2 {
     width: 293.83px;
     height: 278.91px;
-    margin-left: 150px;
-    margin-bottom: 70px;
+    margin-left: 50px;
+    margin-top: 70px;
+    /* margin-bottom: 70px; */
     z-index: 1;
 }
 
@@ -124,46 +126,44 @@ body {
     width: 82.92px;
     height: 80.57px;
     margin-left: 170px;
-    margin-bottom: 25px;
-    margin-top: 15px;
+    /* margin-bottom: 25px; */
+    margin-top: 350px;
 }
 
 .ellipse4 {
     width: 82.11px;
     height: 79.79px;
     margin-left: 115px;
-    margin-bottom: 260px;
-    margin-top: 15px;
+    /* margin-bottom: 260px; */
+    margin-top: 100px;
 }
 
 .ellipse5 {
     width: 124.38px;
     height: 120.86px;
-    margin-bottom: 25px;
-    margin-top: 100px; 
+    /* margin-bottom: 25px; */
+    margin-top: 300px; 
 }
 
 .ellipse6 {
     width: 124.38px;
     height: 120.86px;
     margin-left: 50px;
-    margin-bottom: 105px;
-    margin-top: 40px; 
+    /* margin-bottom: 105px; */
+    margin-top: 240px; 
 }
 
 .ellipse7 {
-width: 385px;
-height: 374px;
-margin-top: 65px;
-margin-bottom: 0px;
+   width: 385px;
+   height: 374px; 
+   margin-top: 65px;
 }
 
 .ellipse8 {
     width: 82.11px;
     height: 79.79px;
     margin-left: 35px;
-    margin-bottom: 147px;
-    margin-top: 40px;
+    margin-top: 220px;
 }
 
 .ellipse9 {
@@ -171,15 +171,14 @@ margin-bottom: 0px;
     height: 236px;
     margin-left: 115px;
     margin-bottom: 60px;
-    z-index: 0;
 }
 
 .ellipse10 {
     width: 82.11px;
     height: 79.79px;
+    margin-top: 357px;
     margin-left: 40px;
     margin-right: -1px;
-    z-index: 0;
 }
 
 .div-conteiner {
@@ -194,18 +193,41 @@ margin-bottom: 0px;
 
 .div-part2 {
     grid-area: 1 / 1;
-    height: 100%;
-    width: 100%;
+    left:0;
+    bottom:0;
+    right:0;
+    display: flex; 
+
 }
 
 .username {
-    font-family: 'Montserrat Bold';
+    width: 137px;
+    height: 22px;
+    text-align: right;
+    font-family: 'Montserrat Bold', sans-serif;
     font-size: 18px;
     color: #FFFFFF;
     margin-right: 0;
-    /* margin-left: 1183px; */
-    
-    font-weight: 700px; 
+    margin-top: 18px;
+    margin-bottom: 18px;
+    font-weight: bold; 
+    /* grid-area: 'username'; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.button-exit {
+    width: 35px;
+    height: 35px;
+    margin-left: 10px;
+    margin-right: 58px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+    border: none;
+    /* grid-area: 'exit'; */
+    color: #FFFFFF;
+    background-color: transparent;
+    background-image: url('/public/images/Logout.svg');
 }
 
 .button-menu {
@@ -217,9 +239,26 @@ margin-bottom: 0px;
     margin-bottom: 18px;
     margin-left: 17px;
     margin-top: 15px;
+    /* margin-right: 1640px; */
+    /* grid-area: 'menu'; */
 }
 
 .div-conteiner-header {
-    display: flex;
+    display: grid;
+    /* grid-template-columns: auto auto auto;
+    grid-template-areas: 'menu username exit'; */
     height: 71px;
 }
+
+.menu-area {
+   grid-area:  1/1; 
+}
+
+.user-exit {
+    display: flex;
+    justify-content: flex-end;
+    right: 0;
+    grid-area:  1 / 1;
+}
+
+
