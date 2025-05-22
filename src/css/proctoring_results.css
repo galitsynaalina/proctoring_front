@@ -190,3 +190,27 @@
     border: none;
     text-align: left;
 }
+
+.button-edit {
+    width: 26px;
+    height: 26px;
+    background-image: url('/public/images/edit.png');
+    background-color: transparent;
+    border: none;
+    /* margin-bottom: 13px; */
+    /* margin-left: 15px; */
+    margin-right: 13px;
+    /* margin-top: 13px; */
+}
+
+.button-delete {
+    width: 26px;
+    height: 26px;
+    background-image: url('/public/images/delete.svg');
+    background-color: transparent;
+    border: none;
+    /* margin-bottom: 13px; */
+    /* margin-left: 15px; */
+    margin-right: 13px;
+    /* margin-top: 13px; */
+}

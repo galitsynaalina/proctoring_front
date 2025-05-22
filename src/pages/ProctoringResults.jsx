@@ -1,7 +1,17 @@
 import React from "react";
 import "../css/proctoring_results.css";
 import "@radix-ui/themes/styles.css";
+import '@coreui/coreui/dist/css/coreui.min.css'
 import { Table, Theme } from "@radix-ui/themes";
+import {CBadge,
+  CSidebar,
+  CSidebarBrand,
+  CSidebarHeader,
+  CSidebarNav,
+  CSidebarToggler,
+  CNavGroup,
+  CNavItem,
+  CNavTitle,} from '@coreui/react'
 
 const ProctoringResults = () => {
     return (
@@ -14,10 +24,50 @@ const ProctoringResults = () => {
             </div>
             <div className="user-exit">
             <span className="username">Пользователь</span>
-            <button className="button-exit"></button>
+            <button className="button-exit" name="button-exit"></button>
             </div>
             </div>
         </header>
+        
+  
+    <CSidebar className="border-end" unfoldable>
+      <CSidebarHeader className="border-bottom">
+        <CSidebarBrand>CUI</CSidebarBrand>
+      </CSidebarHeader>
+      <CSidebarNav>
+        <CNavTitle>Nav Title</CNavTitle>
+        <CNavItem href="#">
+        </CNavItem>
+        <CNavItem href="#">
+          <CBadge color="primary ms-auto">NEW</CBadge>
+        </CNavItem>
+        <CNavGroup
+          toggler={
+            <>
+            </>
+          }
+        >
+          <CNavItem href="#">
+            <span className="nav-icon">
+              <span className="nav-icon-bullet"></span>
+            </span>{' '}
+            Nav dropdown item
+          </CNavItem>
+          <CNavItem href="#">
+            <span className="nav-icon">
+              <span className="nav-icon-bullet"></span>
+            </span>{' '}
+            Nav dropdown item
+          </CNavItem>
+        </CNavGroup>
+        <CNavItem href="https://coreui.io">
+        </CNavItem>
+        <CNavItem href="https://coreui.io/pro/">
+        </CNavItem>
+      </CSidebarNav>
+    </CSidebar>
+  
+
         </div>
         <div className="div-title">
             <h3 className="proctoring-results-title">Результаты прокторинга</h3>
@@ -50,20 +100,18 @@ const ProctoringResults = () => {
 			<Table.RowHeaderCell>Danilo Sousa</Table.RowHeaderCell>
 			<Table.Cell>danilo@example.com</Table.Cell>
 			<Table.Cell>Developer</Table.Cell>
+            <Table.Cell>1</Table.Cell>
+            <Table.Cell>1</Table.Cell>
+            <Table.Cell>1</Table.Cell>
+            <Table.Cell>1</Table.Cell>
+            <Table.Cell>1</Table.Cell>
+            <Table.Cell>123434</Table.Cell>
+            <Table.Cell>
+                <button className="button-delete" name="button-delete"></button>
+                <button className="button-edit" name="button-edit"></button>
+            </Table.Cell>
 		</Table.Row>
-
-		<Table.Row>
-			<Table.RowHeaderCell>Zahra Ambessa</Table.RowHeaderCell>
-			<Table.Cell>zahra@example.com</Table.Cell>
-			<Table.Cell>Admin</Table.Cell>
-		</Table.Row>
-
-		<Table.Row>
-			<Table.RowHeaderCell>Jasper Eriksson</Table.RowHeaderCell>
-			<Table.Cell>jasper@example.com</Table.Cell>
-			<Table.Cell>Developer</Table.Cell>
-		</Table.Row>
-	        </Table.Body>
+	    </Table.Body>
            </Table.Root>
           </Theme>
         </div>
