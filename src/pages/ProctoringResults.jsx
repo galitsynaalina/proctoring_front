@@ -10,18 +10,8 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import { StyleClass } from 'primereact/styleclass';
 import { Ripple } from 'primereact/ripple';
-import { Table, Theme } from "@radix-ui/themes";
-import {
-  CBadge,
-  CSidebar,
-  CSidebarBrand,
-  CSidebarHeader,
-  CSidebarNav,
-  CSidebarToggler,
-  CNavGroup,
-  CNavItem,
-  CNavTitle,
-} from '@coreui/react'
+// import { Table, Theme } from "@radix-ui/themes";
+import Table from "../components/Table";
 
 const ProctoringResults = () => {
   const [visible, setVisible] = useState(false);
@@ -63,7 +53,6 @@ const ProctoringResults = () => {
                     </div>
                     <div className="menu-item">
                       <span className="menu-item-text">Прокторинги</span>
-
                     </div>
                     <div className="menu-item">
                       <span className="menu-item-text">Роли</span>
@@ -90,42 +79,7 @@ const ProctoringResults = () => {
         <input className="search_by_type" name="search_by_type" type="text" placeholder="Поиск по типу" />
       </div>
       <div className="div-table">
-        <Theme panelBackground="solid" radius="none" style={{minHeight: "100px"}}>
-          <Table.Root variant="surface">
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeaderCell>Студент</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Предмет</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Тип прокторинга</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Отсутствие студента</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Лишний человек</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Другой человек</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Взгляд в сторону</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Разговор</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Подсказки</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
-              </Table.Row>
-            </Table.Header>
-
-            <Table.Body>
-              <Table.Row>
-                <Table.RowHeaderCell>Danilo Sousa</Table.RowHeaderCell>
-                <Table.Cell>danilo@example.com</Table.Cell>
-                <Table.Cell>Developer</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>123434</Table.Cell>
-                <Table.Cell>
-                  <button className="button-delete" name="button-delete"></button>
-                  <button className="button-edit" name="button-edit"></button>
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table.Root>
-        </Theme>
+        <Table/>
       </div>
       <div>
         <footer className="footer-style" />
