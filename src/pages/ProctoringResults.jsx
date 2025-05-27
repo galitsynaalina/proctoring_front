@@ -10,8 +10,8 @@ import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
 import { StyleClass } from 'primereact/styleclass';
 import { Ripple } from 'primereact/ripple';
-import { Table, Theme } from "@radix-ui/themes";
-import {SidebarComponent} from "../components/Sidebar";
+// import { Table, Theme } from "@radix-ui/themes";
+import Table from "../components/Table";
 
 const ProctoringResults = () => {
   const [visible, setVisible] = useState(false);
@@ -34,7 +34,41 @@ const ProctoringResults = () => {
             </div>
           </div>
         </header>
-        <SidebarComponent></SidebarComponent>
+        <Sidebar
+          visible={visible}
+          onHide={() => setVisible(false)}
+          content={({ closeIconRef, hide }) => (
+            <div className="min-h-screen flex relative lg:static surface-ground">
+              <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
+                <div>
+                  <header className="header-style">
+                    <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                  </header>
+                  <div>
+                    <div className="menu-item">
+                      <span className="menu-item-text">Результаты</span>
+                    </div>
+                    <div className="menu-item">
+                      <span className="menu-item-text">Типы прокторинга</span>
+                    </div>
+                    <div className="menu-item">
+                      <span className="menu-item-text">Прокторинги</span>
+                    </div>
+                    <div className="menu-item">
+                      <span className="menu-item-text">Роли</span>
+                    </div>
+                    <div className="menu-item">
+                      <span className="menu-item-text">Пользователи</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <footer className="footer-style" />
+                </div>
+              </div>
+            </div>
+          )}
+        ></Sidebar>
       </div>
       <div className="div-title">
         <h3 className="proctoring-results-title">Результаты прокторинга</h3>
@@ -45,42 +79,7 @@ const ProctoringResults = () => {
         <input className="search_by_type" name="search_by_type" type="text" placeholder="Поиск по типу" />
       </div>
       <div className="div-table">
-        <Theme panelBackground="solid" radius="none" style={{minHeight: "100px"}}>
-          <Table.Root variant="surface">
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeaderCell>Студент</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Предмет</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Тип прокторинга</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Отсутствие студента</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Лишний человек</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Другой человек</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Взгляд в сторону</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Разговор</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Подсказки</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
-              </Table.Row>
-            </Table.Header>
-
-            <Table.Body>
-              <Table.Row>
-                <Table.RowHeaderCell>Danilo Sousa</Table.RowHeaderCell>
-                <Table.Cell>danilo@example.com</Table.Cell>
-                <Table.Cell>Developer</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>1</Table.Cell>
-                <Table.Cell>123434</Table.Cell>
-                <Table.Cell>
-                  <button className="button-delete" name="button-delete"></button>
-                  <button className="button-edit" name="button-edit"></button>
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table.Root>
-        </Theme>
+        <Table/>
       </div>
       <div>
         <footer className="footer-style" />
