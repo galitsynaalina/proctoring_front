@@ -19,11 +19,11 @@ const Table = () => {
         },
     ];
 
-    const button_delete = (rowData, options) => {
+    const button_delete = () => {
         return <button className="button-delete" name="button-delete"/>;
     };
 
-    const button_edit = (rowData, options) => {
+    const button_edit = () => {
         return <button className="button-edit" name="button-edit"/>;
     };
 

@@ -219,7 +219,7 @@
     height: 66px;
     background-color: transparent;
     margin-bottom: 0px;
-    padding: 20px;
+    /* padding: 20px; */
 }
 
 .menu-item-text 
@@ -228,5 +228,6 @@
     font-size: 20px;
     font-weight: 600px; 
     color: #1B4E9B;
-    /* padding: 20px; */
+    text-decoration: none;
+    padding: 20px;
 }
