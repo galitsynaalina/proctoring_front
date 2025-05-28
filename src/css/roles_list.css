@@ -63,10 +63,24 @@
 
 .div-conteiner-header {
     display: grid;
-    /* grid-template-columns: auto auto auto;
-    grid-template-areas: 'menu username exit'; */
     height: 71px;
 }
+
+.div-conteiner {
+    display: grid;
+    grid-template-areas: "search button";
+}
+
+/* .search-area {
+    grid-area: search;
+    display: flex;
+} 
+
+.button-add-role-area {
+    grid-area: button;  
+    display: flex;
+    justify-content: flex-end;
+} */
 
 .menu-area {
     grid-area:  1/1; 
@@ -95,10 +109,11 @@
 .div-search {
     margin-left: 58px;
     margin-top: 30px;
+    grid-area: 1/1;
 }
 
-.search_by_student {
-    width: 200px;
+.search_by_role {
+    width: 320px;
     height: 40px;
     background-color: #FFFFFF;
     border-color: #1B4E9B;
@@ -111,55 +126,10 @@
     margin-right: 15px;
     padding-left: 17.14px;
     padding-right: 17.14px;
+    grid-area: search;
 }
 
-.search_by_student::placeholder{
-    color: #D9D9D9;
-    font-family: 'Montserrat SemiBold', sans-serif;
-    font-size: 12px;
-    font-weight: 600px;
-}
-
-.search_by_subject {
-    width: 200px;
-    height: 40px;
-    background-color: #FFFFFF;
-    border-color: #1B4E9B;
-    border-width: thin;
-    border-radius: 2rem;
-    color: #1B4E9B;
-    font-family: 'Montserrat SemiBold', sans-serif;
-    font-size: 12px;
-    font-weight: 600px;
-    margin-right: 15px;
-    padding-left: 17.14px;
-    padding-right: 17.14px;
-}
-
-.search_by_subject::placeholder{
-    color: #D9D9D9;
-    font-family: 'Montserrat SemiBold', sans-serif;
-    font-size: 12px;
-    font-weight: 600px;
-}
-
-.search_by_type {
-    width: 200px;
-    height: 40px;
-    background-color: #FFFFFF;
-    border-color: #1B4E9B;
-    border-width: thin;
-    border-radius: 2rem;
-    color: #1B4E9B;
-    font-family: 'Montserrat SemiBold', sans-serif;
-    font-size: 12px;
-    font-weight: 600px;
-    margin-right: 15px;
-    padding-left: 17.14px;
-    padding-right: 17.14px;
-}
-
-.search_by_type::placeholder{
+.search_by_role::placeholder{
     color: #D9D9D9;
     font-family: 'Montserrat SemiBold', sans-serif;
     font-size: 12px;
@@ -196,10 +166,6 @@
     background-image: url('/public/images/edit.png');
     background-color: transparent;
     border: none;
-    /* margin-bottom: 13px; */
-    /* margin-left: 15px; */
-    /* margin-right: 13px; */
-    /* margin-top: 13px; */
 }
 
 .button-delete {
@@ -208,10 +174,6 @@
     background-image: url('/public/images/delete.svg');
     background-color: transparent;
     border: none;
-    /* margin-bottom: 13px; */
-    /* margin-left: 15px; */
-    /* margin-right: 13px; */
-    /* margin-top: 13px; */
 }
 
 .menu-item 
@@ -220,7 +182,6 @@
     background-color: transparent;
     margin-bottom: 0px;
     text-decoration: none;
-    /* padding: 20px; */
 }
 
 .menu-item-text 
@@ -231,4 +192,22 @@
     color: #1B4E9B;
     text-decoration: none;
     padding: 20px;
+}
+
+.button {
+    width: 307px;
+    height: 50px;
+    background-color: #1B4E9B;
+    border-color: #1B4E9B;
+    border-width: thin;
+    border-radius: 2rem;
+    color: #1B4E9B;
+    font-family: 'Montserrat SemiBold', sans-serif;
+    font-size: 20px;
+    font-weight: 600px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    grid-area: button;
 }

@@ -28,7 +28,7 @@ const Table = () => {
     };
 
     return (
-        <DataTable stripedRows value={results} tableStyle={{ minWidth: '50rem' }}>
+        <DataTable stripedRows paginator rows={10} value={results} tableStyle={{ minWidth: '50rem' }}>
             <Column field="student" header="Студент"></Column>
             <Column field="subject" header="Предмет"></Column>
             <Column field="proctoring_type" header="Тип прокторинга"></Column>

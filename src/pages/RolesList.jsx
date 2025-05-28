@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "../css/proctoring_results.css";
+import "../css/roles_list.css";
 import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -7,12 +7,10 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import { StyleClass } from 'primereact/styleclass';
-import { Ripple } from 'primereact/ripple';
 // import { Table, Theme } from "@radix-ui/themes";
-import Table from "../components/TableResults";
+import Table from "../components/TableRoles";
 
-const ProctoringResults = () => {
+const RolesList = () => {
 
   const [visible, setVisible] = useState(false);
 
@@ -66,12 +64,15 @@ const ProctoringResults = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="table-title">Результаты прокторинга</h3>
+        <h3 className="table-title">Роли</h3>
       </div>
-      <div className="div-search">
-        <input className="search_by_student" name="search_by_student" type="text" placeholder="Поиск по студенту" />
-        <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" />
-        <input className="search_by_type" name="search_by_type" type="text" placeholder="Поиск по типу" />
+      <div className="div-container">
+      {/* <div className="search-area"> */}
+        <input className="search_by_role" name="search_by_role" type="text" placeholder="Поиск роли" />
+      {/* </div> */}
+      {/* <div className="button-add-role-area"> */}
+        <Button className="button">Добавить роль</Button>
+      {/* </div> */}
       </div>
       <div className="div-table">
         <Table />
@@ -83,4 +84,4 @@ const ProctoringResults = () => {
   );
 };
 
-export default ProctoringResults;
+export default RolesList;
