@@ -16,7 +16,7 @@ const Login = () => {
         <div className="div-center">
         <input className="password" type="password" name="password" placeholder="Пароль"/>
         </div>
-        <div className="div-conteiner">
+        {/* <div className="div-conteiner"> */}
         <div className="div-part1">
             <button className="button-submit" type="submit">Войти</button>
         </div>
@@ -31,7 +31,7 @@ const Login = () => {
         <img className="ellipse2" src="../images/Ellipse2.svg" alt="Ellipse2"/>
         <img className="ellipse10" src="../images/Ellipse10.svg" alt="Ellipse10"/>
         </div>
-        </div>
+        {/* </div> */}
     </div>
     );
 };  

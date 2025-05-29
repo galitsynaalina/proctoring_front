@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import "../css/roles_list.css";
+import "../css/sidebar.css"
 import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -32,19 +33,19 @@ const RolesList = () => {
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
-                          <div className="menu-item-text">Результаты</div>
+                            <div className="menu-item-text">Результаты</div>
                           </a>
                           <a href="#" className="menu-item" >
-                          <div className="menu-item-text">Типы прокторинга</div>
+                            <div className="menu-item-text">Типы прокторинга</div>
                           </a>
                           <a href="#" className="menu-item" >
-                          <div className="menu-item-text">Прокторинги</div>
+                            <div className="menu-item-text">Прокторинги</div>
                           </a>
                           <a href="/roles-list" className="menu-item" >
-                          <div className="menu-item-text">Роли</div>
+                            <div className="menu-item-text">Роли</div>
                           </a>
                           <a href="#" className="menu-item" >
-                          <div className="menu-item-text">Пользователи</div>
+                            <div className="menu-item-text">Пользователи</div>
                           </a>
                         </div>
                       </div>
@@ -66,13 +67,9 @@ const RolesList = () => {
       <div className="div-title">
         <h3 className="table-title">Роли</h3>
       </div>
-      <div className="div-container">
-      {/* <div className="search-area"> */}
-        <input className="search_by_role" name="search_by_role" type="text" placeholder="Поиск роли" />
-      {/* </div> */}
-      {/* <div className="button-add-role-area"> */}
-        <Button className="button">Добавить роль</Button>
-      {/* </div> */}
+      <div class="div-conteiner">
+          <input className="search_by_role" name="search_by_role" type="text" placeholder="Поиск роли" />
+          <Button className="button">Добавить роль</Button>
       </div>
       <div className="div-table">
         <Table />
@@ -80,7 +77,7 @@ const RolesList = () => {
       <div>
         <footer className="footer-style" />
       </div>
-    </div>
+    </div >
   );
 };
 

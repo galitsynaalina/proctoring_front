@@ -213,22 +213,3 @@
     /* margin-right: 13px; */
     /* margin-top: 13px; */
 }
-
-.menu-item 
-{
-    height: 66px;
-    background-color: transparent;
-    margin-bottom: 0px;
-    text-decoration: none;
-    /* padding: 20px; */
-}
-
-.menu-item-text 
-{
-    font-family: 'Montserrat SemiBold', sans-serif;
-    font-size: 20px;
-    font-weight: 600px; 
-    color: #1B4E9B;
-    text-decoration: none;
-    padding: 20px;
-}

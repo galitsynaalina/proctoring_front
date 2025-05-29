@@ -29,8 +29,8 @@ const Table = () => {
             <Column field="create" header="Права на создание"></Column>
             <Column field="reading" header="Права на редактирование"></Column>
             <Column field="edit" header="Права на удаление"></Column>
-            <Column field="" header="" style={{ minWidth: '30px' }} body={button_delete}></Column>
-            <Column field="" header="" body={button_edit}></Column>
+            <Column field="" header="" style={{width: "50px", minWidth: '30px' }} body={button_delete}></Column>
+            <Column field="" header="" body={button_edit} style={{width: "50px"}}></Column>
 
         </DataTable>
     );

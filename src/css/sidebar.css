@@ -1,0 +1,40 @@
+.header-style {
+    background-color: #1B4E9B;
+    height: 71px;
+}
+
+.footer-style {
+    background-color: #1B4E9B;
+    height: 115px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.menu-item {
+    height: 66px;
+    background-color: transparent;
+    margin-bottom: 0px;
+    text-decoration: none;
+}
+
+.menu-item-text {
+    font-family: 'Montserrat SemiBold', sans-serif;
+    font-size: 20px;
+    font-weight: 600px;
+    color: #1B4E9B;
+    text-decoration: none;
+    padding: 20px;
+}
+
+.button-menu {
+    width: 38px;
+    height: 38px;
+    background-image: url('/public/images/Menu.svg');
+    background-color: transparent;
+    border: none;
+    margin-bottom: 18px;
+    margin-left: 17px;
+    margin-top: 15px;
+}

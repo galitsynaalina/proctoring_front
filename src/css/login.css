@@ -86,7 +86,7 @@ body {
     font-size: 32px;
     font-family: 'Montserrat SemiBold', sans-serif;
     font-weight: 600px;
-    margin: 46px;
+    margin-top: 46px;
     }
 
 .img-logo {
@@ -174,16 +174,15 @@ body {
 }
 
 .div-part1 {
-    grid-area: 1 / 1;
     align-items: center;
     text-align: center;
 }
 
 .div-part2 {
-    grid-area: 1 / 1;
-    left:0;
-    bottom:0;
-    right:0;
-    display: flex; 
-
+    display: flex;
+    z-index: 2;
+    overflow: hidden;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    /* position: absolute; */
 }
