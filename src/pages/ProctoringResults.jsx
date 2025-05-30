@@ -1,16 +1,16 @@
 import React, { useState, useRef } from "react";
 import "../css/proctoring_results.css";
-import "@radix-ui/themes/styles.css";
+import "../css/footer.css"
+// import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import { StyleClass } from 'primereact/styleclass';
-import { Ripple } from 'primereact/ripple';
 // import { Table, Theme } from "@radix-ui/themes";
 import Table from "../components/TableResults";
+import Footer from "../components/Footer";
 
 const ProctoringResults = () => {
 
@@ -45,8 +45,11 @@ const ProctoringResults = () => {
                           <a href="/roles-list" className="menu-item" >
                           <div className="menu-item-text">Роли</div>
                           </a>
-                          <a href="#" className="menu-item" >
+                          <a href="/users" className="menu-item" >
                           <div className="menu-item-text">Пользователи</div>
+                          </a>
+                          <a href="/subjects" className="menu-item">
+                            <div className="menu-item-text">Предметы</div>
                           </a>
                         </div>
                       </div>
@@ -77,7 +80,7 @@ const ProctoringResults = () => {
         <Table />
       </div>
       <div>
-        <footer className="footer-style" />
+        <Footer />
       </div>
     </div>
   );

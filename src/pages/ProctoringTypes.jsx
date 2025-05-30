@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "../css/roles_list.css";
+import "../css/subjects.css";
 import "../css/sidebar.css"
 import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -9,10 +9,9 @@ import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 // import { Table, Theme } from "@radix-ui/themes";
-import Table from "../components/TableRoles";
-import Footer from "../components/Footer";
+import Table from "../components/TableSubjects";
 
-const RolesList = () => {
+const ProctoringTypes = () => {
 
   const [visible, setVisible] = useState(false);
 
@@ -33,7 +32,7 @@ const RolesList = () => {
                           <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
-                          <a href="/proctoring-results" className="menu-item" >
+                          <a href="/proctoring-results" className="menu-item">
                             <div className="menu-item-text">Результаты</div>
                           </a>
                           <a href="#" className="menu-item" >
@@ -42,10 +41,10 @@ const RolesList = () => {
                           <a href="#" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles-list" className="menu-item" >
+                          <a href="/roles-list" className="menu-item">
                             <div className="menu-item-text">Роли</div>
                           </a>
-                          <a href="/users" className="menu-item" >
+                          <a href="/users" className="menu-item">
                             <div className="menu-item-text">Пользователи</div>
                           </a>
                           <a href="/subjects" className="menu-item">
@@ -69,18 +68,20 @@ const RolesList = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="table-title">Роли</h3>
+        <h3 className="table-title">Предметы</h3>
       </div>
       <div class="div-conteiner">
-          <input className="search_by_role" name="search_by_role" type="text" placeholder="Поиск роли" />
-          <Button className="button">Добавить роль</Button>
+          {/* <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" /> */}
+          <Button className="button">Добавить тип прокторинга</Button>
       </div>
       <div className="div-table">
         <Table />
       </div>
-      <Footer/>
+      <div>
+        <footer className="footer-style" />
+      </div>
     </div >
   );
 };
 
-export default RolesList;
+export default ProctoringTypes;
