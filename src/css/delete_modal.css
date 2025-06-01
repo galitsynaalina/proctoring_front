@@ -1,0 +1,75 @@
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src:
+        local('Montserrat SemiBold'),
+        url('/public/fonts/Montserrat-SemiBold.ttf') format('ttf');
+}
+
+.delete-modal-style {
+    background-color: #FFFFFF;
+    width: 100vh;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #FFFFFF;
+    width: 300px;
+    height: 200px;
+    border-radius: 12px;
+    border-color: #1B4E9B;
+    border-width: thin;
+    display: flex;
+    justify-content: center;
+}
+
+.text {
+    color: #000000;
+    font-family: 'Montserrat SemiBold', sans-serif;
+    font-size: 24px;
+    font-weight: 600px;
+}
+
+.button-yes {
+    width: 100px;
+    height: 50px;
+    background-color: #1B4E9B;
+    color: #FFFFFF;
+    font-family: 'Montserrat SemiBold', sans-serif;
+    font-size: 24px;
+    font-weight: 600px;
+    border-radius: 2rem;
+    margin-right: 20px;
+    justify-content: center;
+}
+
+.button-no {
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    background-color: #E61F4B;
+    color: #FFFFFF;
+    font-family: 'Montserrat SemiBold', sans-serif;
+    font-size: 24px;
+    font-weight: 600px;
+    border-radius: 2rem;
+    justify-content: center;
+}
+
+.div-text {
+    text-align: center;
+    margin-top: 42px;
+    margin-bottom: 30px;
+}
+
+.div-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}

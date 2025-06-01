@@ -1,9 +1,13 @@
-import React from "react";
+import { React, useState } from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "../css/table.css";
+import DeleteModal from "../pages/DeleteModal";
 
 const Table = () => {
+
+ const [modalActive, setModalActive] = useState(false);
+
     const results = [
         {
             id: 1,
@@ -15,19 +19,20 @@ const Table = () => {
             other_person: false,
             averting_the_gaze: true,
             talk: false,
-            hints: true
+            hints: true,
         },
     ];
 
     const button_delete = () => {
-        return <button className="button-delete" name="button-delete"/>;
+        return <button className="button-delete" name="button-delete" onClick={() => setModalActive(true)} />;
     };
 
     const button_edit = () => {
-        return <button className="button-edit" name="button-edit"/>;
+        return <button className="button-edit" name="button-edit" />;
     };
 
     return (
+        <div>
         <DataTable stripedRows paginator rows={10} value={results} tableStyle={{ minWidth: '50rem' }}>
             <Column field="student" header="Студент" className="table-text" headerClassName="table-header-text"></Column>
             <Column field="subject" header="Предмет" className="table-text" headerClassName="table-header-text"></Column>
@@ -38,10 +43,11 @@ const Table = () => {
             <Column field="averting_the_gaze" header="Взгляд в сторону" headerClassName="table-header-text"></Column>
             <Column field="talk" header="Разговор" headerClassName="table-header-text"></Column>
             <Column field="hints" header="Подсказки" headerClassName="table-header-text"></Column>
-            <Column field="" header=" " style={{ minWidth: '30px' }} body={button_delete}></Column>
-            <Column field="" header=" " body={button_edit}></Column>
-
+            <Column style={{ minWidth: '30px' }} body={button_delete} ></Column>
+            <Column body={button_edit}></Column>
         </DataTable>
+        <DeleteModal active={modalActive} setActive={setModalActive}/>
+        </div>
     );
 };
 

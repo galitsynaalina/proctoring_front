@@ -68,7 +68,7 @@ const Roles = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="table-title">Роли</h3>
+        <h3 className="page-title">Роли</h3>
       </div>
       <div class="div-conteiner">
           <input className="search_by_role" name="search_by_role" type="text" placeholder="Поиск роли" />
