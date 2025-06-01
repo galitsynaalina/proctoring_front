@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "../css/subjects.css";
+import "../css/proctoring_types.css";
 import "../css/sidebar.css"
 import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -8,8 +8,8 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-// import { Table, Theme } from "@radix-ui/themes";
-import Table from "../components/TableSubjects";
+import Table from "../components/TableProctoringTypes";
+import Footer from "../components/Footer";
 
 const ProctoringTypes = () => {
 
@@ -32,19 +32,19 @@ const ProctoringTypes = () => {
                           <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
-                          <a href="/proctoring-results" className="menu-item">
+                          <a href="/proctoring-results" className="menu-item" >
                             <div className="menu-item-text">Результаты</div>
                           </a>
-                          <a href="#" className="menu-item" >
+                          <a href="/proctoring-types" className="menu-item" >
                             <div className="menu-item-text">Типы прокторинга</div>
                           </a>
-                          <a href="#" className="menu-item" >
+                          <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles-list" className="menu-item">
+                          <a href="/roles" className="menu-item" >
                             <div className="menu-item-text">Роли</div>
                           </a>
-                          <a href="/users" className="menu-item">
+                          <a href="/users" className="menu-item" >
                             <div className="menu-item-text">Пользователи</div>
                           </a>
                           <a href="/subjects" className="menu-item">
@@ -68,17 +68,17 @@ const ProctoringTypes = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="table-title">Предметы</h3>
+        <h3 className="page-title">Типы прокторинга</h3>
       </div>
       <div class="div-conteiner">
-          {/* <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" /> */}
-          <Button className="button">Добавить тип прокторинга</Button>
+        {/* <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" /> */}
+        <Button className="button">Добавить тип прокторинга</Button>
       </div>
       <div className="div-table">
         <Table />
       </div>
       <div>
-        <footer className="footer-style" />
+        <Footer />
       </div>
     </div >
   );

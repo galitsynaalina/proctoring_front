@@ -10,6 +10,7 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 // import { Table, Theme } from "@radix-ui/themes";
 import Table from "../components/TableSubjects";
+import Footer from "../components/Footer";
 
 const Subjects = () => {
 
@@ -35,13 +36,13 @@ const Subjects = () => {
                           <a href="/proctoring-results" className="menu-item">
                             <div className="menu-item-text">Результаты</div>
                           </a>
-                          <a href="#" className="menu-item" >
+                          <a href="/proctoring-types" className="menu-item" >
                             <div className="menu-item-text">Типы прокторинга</div>
                           </a>
-                          <a href="#" className="menu-item" >
+                          <a href="proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles-list" className="menu-item">
+                          <a href="/roles" className="menu-item">
                             <div className="menu-item-text">Роли</div>
                           </a>
                           <a href="/users" className="menu-item">
@@ -78,7 +79,7 @@ const Subjects = () => {
         <Table />
       </div>
       <div>
-        <footer className="footer-style" />
+        <Footer/>
       </div>
     </div >
   );

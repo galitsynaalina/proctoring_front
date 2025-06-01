@@ -35,13 +35,13 @@ const Users = () => {
                           <a href="/proctoring-results" className="menu-item">
                             <div className="menu-item-text">Результаты</div>
                           </a>
-                          <a href="#" className="menu-item" >
+                          <a href="/proctoring-types" className="menu-item" >
                             <div className="menu-item-text">Типы прокторинга</div>
                           </a>
-                          <a href="#" className="menu-item" >
+                          <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles-list" className="menu-item">
+                          <a href="/roles" className="menu-item">
                             <div className="menu-item-text">Роли</div>
                           </a>
                           <a href="/users" className="menu-item">

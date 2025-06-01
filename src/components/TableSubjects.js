@@ -1,6 +1,7 @@
 import React from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import "../css/table.css"
 
 const Table = () => {
     const results = [
@@ -20,8 +21,8 @@ const Table = () => {
 
     return (
         <DataTable stripedRows paginator rows={10} value={results} tableStyle={{ minWidth: '50rem' }}>
-            <Column field="id" header="ID"></Column>
-            <Column field="name" header="Название предмета"></Column>
+            <Column field="id" header="ID" className="table-text" headerClassName="table-header-text"></Column>
+            <Column field="name" header="Название предмета"  className="table-text" headerClassName="table-header-text"></Column>
             <Column field="" header="" style={{width: "50px", minWidth: '30px' }} body={button_delete}></Column>
             <Column field="" header="" body={button_edit} style={{width: "50px"}}></Column>
 

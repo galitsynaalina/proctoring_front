@@ -1,9 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"; 
 import Login from "./pages/Login.jsx";
 import ProctoringResults from "./pages/ProctoringResults.jsx";
-import RolesList from "./pages/RolesList.jsx";
+import Roles from "./pages/Roles.jsx";
 import Users from "./pages/Users.jsx"
 import Subjects from "./pages/Subjects.jsx";
+import ProctoringTypes from "./pages/ProctoringTypes.jsx";
+import Proctoring from "./pages/Proctoring.jsx";
 
 
 function App() {
@@ -12,9 +14,11 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/proctoring-results" element={<ProctoringResults />} />
-      <Route path="/roles-list" element={<RolesList />} />
+      <Route path="/roles" element={<Roles />} />
       <Route path="/users" element={<Users />} />
       <Route path="/subjects" element={<Subjects />} />
+      <Route path="/proctoring-types" element={<ProctoringTypes />} />
+      <Route path="/proctoring" element={<Proctoring />} />
     </Routes>
     </BrowserRouter>
   );

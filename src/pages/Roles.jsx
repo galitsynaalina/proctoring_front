@@ -1,15 +1,17 @@
 import React, { useState, useRef } from "react";
-import "../css/proctoring_results.css";
-import "../css/footer.css"
+import "../css/roles.css";
+import "../css/sidebar.css"
+import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import Table from "../components/TableResults";
+import Table from "../components/TableRoles";
 import Footer from "../components/Footer";
 
-const ProctoringResults = () => {
+const Roles = () => {
 
   const [visible, setVisible] = useState(false);
 
@@ -31,19 +33,19 @@ const ProctoringResults = () => {
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
-                          <div className="menu-item-text">Результаты</div>
+                            <div className="menu-item-text">Результаты</div>
                           </a>
                           <a href="/proctoring-types" className="menu-item" >
-                          <div className="menu-item-text">Типы прокторинга</div>
+                            <div className="menu-item-text">Типы прокторинга</div>
                           </a>
                           <a href="/proctoring" className="menu-item" >
-                          <div className="menu-item-text">Прокторинги</div>
+                            <div className="menu-item-text">Прокторинги</div>
                           </a>
                           <a href="/roles" className="menu-item" >
-                          <div className="menu-item-text">Роли</div>
+                            <div className="menu-item-text">Роли</div>
                           </a>
                           <a href="/users" className="menu-item" >
-                          <div className="menu-item-text">Пользователи</div>
+                            <div className="menu-item-text">Пользователи</div>
                           </a>
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
@@ -66,21 +68,18 @@ const ProctoringResults = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="page-title">Результаты прокторинга</h3>
+        <h3 className="table-title">Роли</h3>
       </div>
-      <div className="div-search">
-        <input className="search_by_student" name="search_by_student" type="text" placeholder="Поиск по студенту" />
-        <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" />
-        <input className="search_by_type" name="search_by_type" type="text" placeholder="Поиск по типу" />
+      <div class="div-conteiner">
+          <input className="search_by_role" name="search_by_role" type="text" placeholder="Поиск роли" />
+          <Button className="button">Добавить роль</Button>
       </div>
       <div className="div-table">
         <Table />
       </div>
-      <div>
-        <Footer />
-      </div>
-    </div>
+      <Footer/>
+    </div >
   );
 };
 
-export default ProctoringResults;
+export default Roles;
