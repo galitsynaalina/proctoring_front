@@ -6,6 +6,7 @@ import Users from "./pages/Users.jsx"
 import Subjects from "./pages/Subjects.jsx";
 import ProctoringTypes from "./pages/ProctoringTypes.jsx";
 import Proctoring from "./pages/Proctoring.jsx";
+import EditResults from "./pages/EditResults.jsx";
 
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/proctoring-results" element={<ProctoringResults />} />
+      <Route path="/edit-proctoring-results" element={<EditResults />} />
+
       <Route path="/roles" element={<Roles />} />
       <Route path="/users" element={<Users />} />
       <Route path="/subjects" element={<Subjects />} />
