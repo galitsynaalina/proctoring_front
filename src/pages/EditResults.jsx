@@ -6,7 +6,6 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import Table from "../components/TableResults";
 import Footer from "../components/Footer";
 
 const EditResults = () => {
@@ -17,7 +16,7 @@ const EditResults = () => {
     <div>
       <div>
         <header className="header-style">
-          <div className="div-conteiner-header">
+          <div className="div-container-header">
             <div className="menu-area">
               <Button className="button-menu" onClick={() => { setVisible(true) }} />
               <Sidebar visible={visible}
@@ -68,7 +67,7 @@ const EditResults = () => {
       <div className="div-title">
         <h3 className="page-title">Редактирование результата</h3>
       </div>
-      <div className="div-conteiner">
+      <div className="div-container-edit">
         <div className="div-content">
           <span className="input-name">ФИО студента</span>
           <input className="input-text" name="input-fio" type="text" />
@@ -78,6 +77,17 @@ const EditResults = () => {
 
           <span className="input-name">Название типа прокторинга</span>
           <input className="input-text" name="proctoring-type" type="text" />
+
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Отсутствие студента</label>
+          </div>
+
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Лишний человек</label>
+          </div>
+
           <Button className="button">Сохранить</Button>
         </div>
       </div>

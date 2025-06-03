@@ -1,17 +1,14 @@
 import React, { useState, useRef } from "react";
-import styles from "../css/proctoring_types.css";
-import "../css/sidebar.css"
-import "@radix-ui/themes/styles.css";
+import "../css/create_role.css";
+import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import Table from "../components/TableProctoringTypes";
 import Footer from "../components/Footer";
 
-const ProctoringTypes = () => {
+const CreateRole = () => {
 
   const [visible, setVisible] = useState(false);
 
@@ -19,7 +16,7 @@ const ProctoringTypes = () => {
     <div>
       <div>
         <header className="header-style">
-          <div className="div-conteiner-header">
+          <div className="div-container-header">
             <div className="menu-area">
               <Button className="button-menu" onClick={() => { setVisible(true) }} />
               <Sidebar visible={visible}
@@ -68,20 +65,31 @@ const ProctoringTypes = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="page-title">Типы прокторинга</h3>
+        <h3 className="page-title">Создание роли</h3>
       </div>
-      <div class="div-container">
-        {/* <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" /> */}
-        <Button className="button">Добавить тип прокторинга</Button>
-      </div>
-      <div className="div-table">
-        <Table />
+      <div className="div-container-edit">
+        <div className="div-content">
+          <span className="input-name-active">Название роли</span>
+          <input className="input-text-active" name="input-fio" type="text" />
+
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Права на создание</label>
+          </div>
+
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Права на чтение</label>
+          </div>
+
+          <Button className="button">Создать</Button>
+        </div>
       </div>
       <div>
         <Footer />
       </div>
-    </div >
+    </div>
   );
 };
 
-export default ProctoringTypes;
+export default CreateRole;

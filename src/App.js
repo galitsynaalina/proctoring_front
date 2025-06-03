@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"; 
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import ProctoringResults from "./pages/ProctoringResults.jsx";
 import Roles from "./pages/Roles.jsx";
@@ -7,22 +7,31 @@ import Subjects from "./pages/Subjects.jsx";
 import ProctoringTypes from "./pages/ProctoringTypes.jsx";
 import Proctoring from "./pages/Proctoring.jsx";
 import EditResults from "./pages/EditResults.jsx";
-
+import EditRole from "./pages/EditRole.jsx";
+import CreateRole from "./pages/CreateRole.jsx";
+import EditUser from "./pages/EditUser.jsx";
+import CreateUser from "./pages/CreateUser.jsx";
 
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/proctoring-results" element={<ProctoringResults />} />
-      <Route path="/edit-proctoring-results" element={<EditResults />} />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/proctoring-results" element={<ProctoringResults />} />
+        <Route path="/edit-proctoring-results" element={<EditResults />} />
 
-      <Route path="/roles" element={<Roles />} />
-      <Route path="/users" element={<Users />} />
-      <Route path="/subjects" element={<Subjects />} />
-      <Route path="/proctoring-types" element={<ProctoringTypes />} />
-      <Route path="/proctoring" element={<Proctoring />} />
-    </Routes>
+        <Route path="/roles" element={<Roles />} />
+        <Route path="/edit-role" element={<EditRole />} />
+        <Route path="/create-role" element={<CreateRole />} />
+
+        <Route path="/users" element={<Users />} />
+        <Route path="/edit-user" element={<EditUser />} />
+        <Route path="/create-user" element={<CreateUser />} />
+
+        <Route path="/subjects" element={<Subjects />} />
+        <Route path="/proctoring-types" element={<ProctoringTypes />} />
+        <Route path="/proctoring" element={<Proctoring />} />
+      </Routes>
     </BrowserRouter>
   );
 }
