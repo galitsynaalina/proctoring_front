@@ -11,6 +11,13 @@ import EditRole from "./pages/EditRole.jsx";
 import CreateRole from "./pages/CreateRole.jsx";
 import EditUser from "./pages/EditUser.jsx";
 import CreateUser from "./pages/CreateUser.jsx";
+import EditSubject from "./pages/EditSubject.jsx";
+import CreateSubject from "./pages/CreateSubject.jsx";
+import EditType from "./pages/EditType.jsx";
+import CreateType from "./pages/CreateType.jsx";
+import EditProctoring from "./pages/EditProctoring.jsx";
+import CreateProctoring from "./pages/CreateProctoring.jsx";
+
 
 function App() {
   return (
@@ -29,8 +36,18 @@ function App() {
         <Route path="/create-user" element={<CreateUser />} />
 
         <Route path="/subjects" element={<Subjects />} />
+        <Route path="/edit-subject" element={<EditSubject />} />
+        <Route path="/create-subject" element={<CreateSubject />} />
+
+
         <Route path="/proctoring-types" element={<ProctoringTypes />} />
+        <Route path="/edit-type" element={<EditType />} />
+        <Route path="/create-type" element={<CreateType />} />
+
+
         <Route path="/proctoring" element={<Proctoring />} />
+        <Route path="/edit-proctoring" element={<EditProctoring />} />
+        <Route path="/create-proctoring" element={<CreateProctoring />} />
       </Routes>
     </BrowserRouter>
   );
