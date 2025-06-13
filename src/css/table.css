@@ -44,6 +44,10 @@
     font-weight: 600;
 }
 
+.center-header-text div span{
+    margin: 0 auto;
+}
+
 .table-text {
     font-family: 'Montserrat Regular', sans-serif;
     font-size: 16px;
@@ -51,4 +55,6 @@
     font-weight:lighter;
 }
 
-
+.center-column-body{
+    text-align: center;
+}
