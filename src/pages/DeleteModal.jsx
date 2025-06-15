@@ -3,7 +3,7 @@ import "../css/delete_modal.css";
 import { Button } from 'primereact/button';
 
 
-const DeleteModal = ({ active, setActive }) => {
+const DeleteModal = ({ active, setActive, onConfirm }) => {
   
   if (!active) return null;
 
@@ -14,7 +14,7 @@ const DeleteModal = ({ active, setActive }) => {
         <span className="text">Вы хотите удалить запись?</span>
         </div>
         <div className="div-buttons">
-        <Button className="button-yes">Да</Button>
+        <Button className="button-yes" onClick={onConfirm}>Да</Button>
         <Button className="button-no" onClick={() => setActive(false)}>Нет</Button>
         </div>
       </div>

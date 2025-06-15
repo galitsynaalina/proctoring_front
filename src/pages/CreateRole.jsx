@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState} from "react";
 import "../css/create_role.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'

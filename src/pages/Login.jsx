@@ -19,7 +19,7 @@ const Login = () => {
         e.preventDefault();
         try {
             await auth();
-            navigate("/users");
+            navigate("/users")
             // Перенаправление, если нужно
         } catch (error) {
             console.error("Ошибка авторизации", error);

@@ -4,12 +4,14 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "../css/table.css";
 import DeleteModal from "../pages/DeleteModal";
+import { useNavigate } from "react-router-dom";
 
 const Table = () => {
 
     const [modalActive, setModalActive] = useState(false);
-
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState([]);
+    const [selectedId, setSelectedId] = useState(null);
+    const navigate = useNavigate();
 
     async function fetchResults() {
         const response = await api.get("v1/proctoring-result");
@@ -20,7 +22,7 @@ const Table = () => {
         const rawResults = await fetchResults();
         const newResults = [];
 
-        for (const row of rawResults){
+        for (const row of rawResults) {
             const newRow = {};
 
             for (const key in row) {
@@ -28,8 +30,8 @@ const Table = () => {
 
                 if (typeof value === "boolean") {
                     newRow[key] = value
-                        ? <img src="../images/success.svg"/>
-                        : <img src="../images/error.svg"/>;
+                        ? <img src="../images/success.svg" />
+                        : <img src="../images/error.svg" />;
                 } else {
                     newRow[key] = value;
                 }
@@ -44,12 +46,27 @@ const Table = () => {
         prepareResults()
     }, [])
 
-    const button_delete = () => {
-        return <button className="button-delete" name="button-delete" onClick={() => setModalActive(true)} />;
+    const deleteResult = async () => {
+        try {
+            await api.delete(`v1/proctoring-result/${selectedId}`);
+            setModalActive(false);
+            prepareResults(); // обновляем таблицу
+        } catch (error) {
+            console.error("Ошибка при удалении", error);
+        }
     };
 
-    const button_edit = () => {
-        return <button className="button-edit" name="button-edit" />;
+    const button_delete = (rowData) => {
+        return <button className="button-delete" name="button-delete"
+            onClick={() => {
+                setSelectedId(rowData.id);
+                setModalActive(true);
+            }} />;
+    };
+
+    const button_edit = (rowData) => {
+        return <button className="button-edit" name="button-edit"
+            onClick={() => navigate(`/edit-proctoring-results/${rowData.id}`)} />;
     };
 
     return (
@@ -67,7 +84,7 @@ const Table = () => {
                 <Column style={{ minWidth: '30px' }} body={button_delete} ></Column>
                 <Column body={button_edit}></Column>
             </DataTable>
-            <DeleteModal active={modalActive} setActive={setModalActive} />
+            <DeleteModal active={modalActive} setActive={setModalActive} onConfirm={deleteResult} />
         </div>
     );
 };
