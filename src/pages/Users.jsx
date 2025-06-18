@@ -1,8 +1,8 @@
 import React, { useState} from "react";
-import "../css/users.css";
+import styles from "../css/users.module.css";
 import "../css/sidebar.css"
-import "@radix-ui/themes/styles.css";
-import '@coreui/coreui/dist/css/coreui.min.css'
+// import "@radix-ui/themes/styles.css";
+// import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -19,7 +19,7 @@ const Users = () => {
     <div>
       <div>
         <header className="header-style">
-          <div className="div-conteiner-header">
+          <div className="div-container-header">
             <div className="menu-area">
               <Button className="button-menu" onClick={() => { setVisible(true) }} />
               <Sidebar visible={visible}
@@ -67,14 +67,14 @@ const Users = () => {
           </div>
         </header>
       </div>
-      <div className="div-title">
-        <h3 className="table-title">Пользователи</h3>
+      <div className={styles.div_title}>
+        <h3 className={styles.table_title}>Пользователи</h3>
       </div>
-      <div class="div-conteiner">
-          <input className="search_by_fio" name="search_by_fio" type="text" placeholder="Поиск по ФИО" />
-          <Button className="button">Добавить пользователя</Button>
+      <div className={styles.div_container}>
+          <input className={styles.search_by_fio} name="search_by_fio" type="text" placeholder="Поиск по ФИО" />
+          <Button className={styles.button}>Добавить пользователя</Button>
       </div>
-      <div className="div-table">
+      <div className={styles.div_table}>
         <Table />
       </div>
       <div>

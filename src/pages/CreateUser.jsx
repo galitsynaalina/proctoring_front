@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import api from "../api/api";
+import React, { useState, useEffect } from "react";
 import "../css/create_user.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -12,6 +13,26 @@ import { Dropdown } from "primereact/dropdown";
 const CreateUser = () => {
 
   const [visible, setVisible] = useState(false);
+  const [results, setResults] = useState([]);
+  const [roles, setRoles] = useState([]); 
+  const [selectedRole, setSelectedRole] = useState(null);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await api.get("v1/role");
+        const formattedRoles = response.data.map(role => ({
+          label: role.name,
+          value: role.id
+        }));
+        setRoles(formattedRoles);
+      } catch (error) {
+        console.error("Ошибка при загрузке ролей:", error);
+      }
+    };
+
+    fetchRoles();
+  }, []);
 
   return (
     <div>
@@ -77,13 +98,16 @@ const CreateUser = () => {
           <input className="input-text-active" type="text" />
 
           <span className="input-name-active">Пароль</span>
-          <input className="input-text-active" type="text" />
+          <input className="input-text-active" type="password" />
 
           <span className="input-name-active">Подтверждение пароля</span>
-          <input className="input-text-active" type="text" />
+          <input className="input-text-active" type="password" />
 
           <span className="input-name-active">Роль</span>
-          <Dropdown className="input-text-active" type="text" />
+          <Dropdown className="input-text-active" type="text"
+            value={selectedRole}
+            options={roles}
+            onChange={(e) => setSelectedRole(e.value)} />
 
           <Button className="button">Сохранить</Button>
         </div>

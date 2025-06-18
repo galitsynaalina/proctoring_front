@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import styles from "../css/proctoring_types.css";
+import styles from "../css/proctoring_types.module.css";
 import "../css/sidebar.css"
 import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -67,14 +67,14 @@ const ProctoringTypes = () => {
           </div>
         </header>
       </div>
-      <div className="div-title">
-        <h3 className="page-title">Типы прокторинга</h3>
+      <div className={styles.div_title}>
+        <h3 className={styles.page_title}>Типы прокторинга</h3>
       </div>
-      <div class="div-container">
+      <div class={styles.div_container}>
         {/* <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" /> */}
-        <Button className="button">Добавить тип прокторинга</Button>
+        <Button className={styles.button}>Добавить тип прокторинга</Button>
       </div>
-      <div className="div-table">
+      <div className={styles.div_table}>
         <Table />
       </div>
       <div>

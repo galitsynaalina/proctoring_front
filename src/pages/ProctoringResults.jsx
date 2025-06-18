@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "../css/proctoring_results.css";
+import styles from "../css/proctoring_results.module.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -17,7 +17,7 @@ const ProctoringResults = () => {
     <div>
       <div>
         <header className="header-style">
-          <div className="div-conteiner-header">
+          <div className="div-container-header">
             <div className="menu-area">
               <Button className="button-menu" onClick={() => { setVisible(true) }} />
               <Sidebar visible={visible}
@@ -31,19 +31,19 @@ const ProctoringResults = () => {
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
-                          <div className="menu-item-text">Результаты</div>
+                            <div className="menu-item-text">Результаты</div>
                           </a>
                           <a href="/proctoring-types" className="menu-item" >
-                          <div className="menu-item-text">Типы прокторинга</div>
+                            <div className="menu-item-text">Типы прокторинга</div>
                           </a>
                           <a href="/proctoring" className="menu-item" >
-                          <div className="menu-item-text">Прокторинги</div>
+                            <div className="menu-item-text">Прокторинги</div>
                           </a>
                           <a href="/roles" className="menu-item" >
-                          <div className="menu-item-text">Роли</div>
+                            <div className="menu-item-text">Роли</div>
                           </a>
                           <a href="/users" className="menu-item" >
-                          <div className="menu-item-text">Пользователи</div>
+                            <div className="menu-item-text">Пользователи</div>
                           </a>
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
@@ -65,15 +65,15 @@ const ProctoringResults = () => {
           </div>
         </header>
       </div>
-      <div className="div-title">
-        <h3 className="page-title">Результаты прокторинга</h3>
+      <div className={styles.div_title}>
+        <h3 className={styles.page_title}>Результаты прокторинга</h3>
       </div>
-      <div className="div-search">
-        <input className="search_by_student" name="search_by_student" type="text" placeholder="Поиск по студенту" />
-        <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" />
-        <input className="search_by_type" name="search_by_type" type="text" placeholder="Поиск по типу" />
+      <div className={styles.div_search}>
+        <input className={styles.search_by_student} name="search_by_student" type="text" placeholder="Поиск по студенту" />
+        <input className={styles.search_by_subject} name="search_by_subject" type="text" placeholder="Поиск по предмету" />
+        <input className={styles.search_by_type} name="search_by_type" type="text" placeholder="Поиск по типу" />
       </div>
-      <div className="div-table">
+      <div className={styles.div_table}>
         <Table />
       </div>
       <div>

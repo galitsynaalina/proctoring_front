@@ -1,16 +1,16 @@
-
 @font-face {
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
     src:
-    local('Montserrat SemiBold'), 
-    url('/public/fonts/Montserrat-SemiBold.ttf') format('ttf');
+        local('Montserrat SemiBold'),
+        url('/public/fonts/Montserrat-SemiBold.ttf') format('ttf');
+    unicode-range: U+0400–04FF;
 }
 
 @font-face {
     font-family: "Montserrat Bold";
     src:
-    local('Montserrat Bold'), 
-    url('/public/fonts/Montserrat-Bold.ttf') format('ttf');
+        local('Montserrat Bold'),
+        url('/public/fonts/Montserrat-Bold.ttf') format('ttf');
 }
 
 body {
@@ -20,8 +20,10 @@ body {
 }
 
 
-.img-logo{
+.img-logo {
     margin: 25px;
+    width: 246px;
+    height: 159px;
 }
 
 .title {
@@ -37,15 +39,15 @@ body {
     margin: 25px;
 }
 
-.div-center{
+.div-center {
     align-items: center;
     text-align: center;
 }
 
-.login{
+.login {
     width: 521px;
     height: 73.5px;
-    border: none; 
+    border: none;
     border-bottom: 2px solid #1B4E9B;
     background-color: transparent;
     color: #1B4E9B;
@@ -55,10 +57,10 @@ body {
     font-weight: 600px;
 }
 
-.password{
+.password {
     width: 521px;
     height: 73.5px;
-    border: none; 
+    border: none;
     border-bottom: 2px solid #1B4E9B;
     background-color: transparent;
     color: #1B4E9B;
@@ -68,15 +70,15 @@ body {
     font-weight: 600px;
 }
 
-.login::placeholder{
+.login::placeholder {
     color: #D9D9D9;
 }
 
-.password::placeholder{
+.password::placeholder {
     color: #D9D9D9;
 }
 
-.button-submit{
+.button-submit {
     color: #FFFFFF;
     background-color: #1B4E9B;
     width: 206px;
@@ -87,9 +89,9 @@ body {
     font-family: 'Montserrat SemiBold', sans-serif;
     font-weight: 600px;
     margin-top: 46px;
-    }
+}
 
-.img-logo {
+.img_logo {
     height: 159.26px;
     width: 246.31px;
 }
@@ -98,16 +100,15 @@ body {
     width: 124.38px;
     height: 120.86px;
     margin-left: 75px;
-    margin-top: 317px;
+    margin-top: 250px;
 }
 
 .ellipse2 {
     width: 293.83px;
     height: 278.91px;
     margin-left: 50px;
-    margin-top: 70px;
+    margin-top: 45px;
     /* margin-bottom: 70px; */
-    z-index: 1;
 }
 
 .ellipse3 {
@@ -115,7 +116,7 @@ body {
     height: 80.57px;
     margin-left: 170px;
     /* margin-bottom: 25px; */
-    margin-top: 350px;
+    margin-top: 250px;
 }
 
 .ellipse4 {
@@ -130,7 +131,7 @@ body {
     width: 124.38px;
     height: 120.86px;
     /* margin-bottom: 25px; */
-    margin-top: 300px; 
+    margin-top: 250px;
 }
 
 .ellipse6 {
@@ -138,20 +139,19 @@ body {
     height: 120.86px;
     margin-left: 50px;
     /* margin-bottom: 105px; */
-    margin-top: 240px; 
+    margin-top: 200px;
 }
 
 .ellipse7 {
-   width: 385px;
-   height: 374px; 
-   margin-top: 65px;
+    width: 385px;
+    height: 374px;
 }
 
 .ellipse8 {
     width: 82.11px;
     height: 79.79px;
     margin-left: 35px;
-    margin-top: 220px;
+    margin-top: 150px;
 }
 
 .ellipse9 {
@@ -164,9 +164,9 @@ body {
 .ellipse10 {
     width: 82.11px;
     height: 79.79px;
-    margin-top: 357px;
     margin-left: 40px;
-    margin-right: -1px;
+    /* margin-right: -1px; */
+    margin-top: 290px;
 }
 
 .div-conteiner {
@@ -176,13 +176,20 @@ body {
 .div-part1 {
     align-items: center;
     text-align: center;
+    background-color: transparent;
+    z-index: 2;
+    position: relative;
 }
 
 .div-part2 {
     display: flex;
-    z-index: 2;
+    z-index: 1;
     overflow: hidden;
+    width: 100%;
+    pointer-events: none;
     justify-content: space-between;
     flex-wrap: nowrap;
-    /* position: absolute; */
+    position: absolute;
+    bottom:0;
+    left: 0;
 }

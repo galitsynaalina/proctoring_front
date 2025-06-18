@@ -1,8 +1,7 @@
-import React, {useState} from "react";
-import "../css/subjects.css";
+import React, { useState} from "react";
+import styles from "../css/subjects.module.css";
+import "../css/sidebar.css";
 import "../css/sidebar.css"
-import "@radix-ui/themes/styles.css";
-import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -30,22 +29,22 @@ const Subjects = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"/>
+                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
-                          <a href="/proctoring-results" className="menu-item">
+                          <a href="/proctoring-results" className="menu-item" >
                             <div className="menu-item-text">Результаты</div>
                           </a>
                           <a href="/proctoring-types" className="menu-item" >
                             <div className="menu-item-text">Типы прокторинга</div>
                           </a>
-                          <a href="proctoring" className="menu-item" >
+                          <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item">
+                          <a href="/roles" className="menu-item" >
                             <div className="menu-item-text">Роли</div>
                           </a>
-                          <a href="/users" className="menu-item">
+                          <a href="/users" className="menu-item" >
                             <div className="menu-item-text">Пользователи</div>
                           </a>
                           <a href="/subjects" className="menu-item">
@@ -68,18 +67,18 @@ const Subjects = () => {
           </div>
         </header>
       </div>
-      <div className="div-title">
-        <h3 className="table-title">Предметы</h3>
+      <div className={styles.div_title}>
+        <h3 className={styles.table_title}>Предметы</h3>
       </div>
-      <div class="div-conteiner">
-          <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" />
-          <Button className="button">Добавить предмет</Button>
+      <div className={styles.div_container}>
+        <input className={styles.search_by_subject} name="search_by_subject" type="text" placeholder="Поиск по предмету" />
+        <Button className={styles.button}>Добавить предмет</Button>
       </div>
-      <div className="div-table">
+      <div className={styles.div_table}>
         <Table />
       </div>
       <div>
-        <Footer/>
+        <Footer />
       </div>
     </div >
   );

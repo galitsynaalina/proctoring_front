@@ -5,11 +5,11 @@
     url('/public/fonts/Montserrat-SemiBold.ttf') format('ttf');
 }
 
-.div-title {
+.div_title {
     margin-top: 40px;
 }
 
-.page-title {
+.page_title {
     color: #1B4E9B;
     font-family: 'Montserrat SemiBold', sans-serif;
     font-size: 32px;
@@ -18,7 +18,7 @@
     margin-right: 205px;
 }
 
-.div-search {
+.div_search {
     margin-left: 58px;
     margin-top: 30px;
 }
@@ -95,14 +95,14 @@
     font-weight: 600px;
 }
 
-.div-table {
+.div_table {
     margin-left: 58px;
     margin-right: 58px;
     margin-top: 20px;
     margin-bottom: 32px;
 }
 
-.table-header {
+.table_header {
     width: 215px;
     height: 52px;
     padding-top: 10px;
@@ -118,3 +118,4 @@
     border: none;
     text-align: left;
 }
+

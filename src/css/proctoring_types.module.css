@@ -5,7 +5,7 @@
         url('/public/fonts/Montserrat-SemiBold.ttf') format('ttf');
 }
 
-.header-style {
+.header_style {
     background-color: #1B4E9B;
     height: 71px;
 }
@@ -25,7 +25,7 @@
     padding-bottom: 5px;
 }
 
-.button-exit {
+.button_exit {
     width: 35px;
     height: 35px;
     margin-left: 10px;
@@ -38,7 +38,7 @@
     background-image: url('/public/images/Logout.svg');
 }
 
-.button-menu {
+.button_menu {
     width: 38px;
     height: 38px;
     background-image: url('/public/images/Menu.svg');
@@ -49,12 +49,12 @@
     margin-top: 15px;
 }
 
-.div-conteiner-header {
+.div_container_header {
     display: grid;
     height: 71px;
 }
 
-.div-conteiner {
+.div_container {
     display: flex;
     justify-content: right;
     margin-top: 20px;
@@ -104,22 +104,22 @@
     margin-right: 58px;
 }
 
-.menu-area {
+.menu_area {
     grid-area: 1/1;
 }
 
-.user-exit {
+.user_exit {
     display: flex;
     justify-content: flex-end;
     right: 0;
     grid-area: 1 / 1;
 }
 
-.div-title {
+.div_title {
     margin-top: 40px;
 }
 
-.page-title {
+.page_title {
     color: #1B4E9B;
     font-family: 'Montserrat SemiBold', sans-serif;
     font-size: 32px;
@@ -128,11 +128,10 @@
     margin-right: 205px;
 }
 
-.div-table {
+.div_table {
     margin-left: 58px;
     margin-right: 58px;
     margin-top: 20px;
     margin-bottom: 32px;
 }
-
 

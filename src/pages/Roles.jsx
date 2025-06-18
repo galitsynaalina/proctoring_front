@@ -1,5 +1,6 @@
 import React, { useState} from "react";
-import "../css/roles.css";
+import { useNavigate } from "react-router-dom";
+import styles from "../css/roles.module.css";
 import "../css/sidebar.css"
 import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -14,12 +15,13 @@ import Footer from "../components/Footer";
 const Roles = () => {
 
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div>
       <div>
         <header className="header-style">
-          <div className="div-conteiner-header">
+          <div className="div-container-header">
             <div className="menu-area">
               <Button className="button-menu" onClick={() => { setVisible(true) }} />
               <Sidebar visible={visible}
@@ -67,14 +69,14 @@ const Roles = () => {
           </div>
         </header>
       </div>
-      <div className="div-title">
-        <h3 className="page-title">Роли</h3>
+      <div className={styles.div_title}>
+        <h3 className={styles.page_title}>Роли</h3>
       </div>
-      <div class="div-conteiner">
-          <input className="search_by_role" name="search_by_role" type="text" placeholder="Поиск роли" />
-          <Button className="button">Добавить роль</Button>
+      <div class={styles.div_container}>
+          <input className={styles.search_by_role} name="search_by_role" type="text" placeholder="Поиск роли" />
+          <Button className={styles.button} onClick={() => navigate("/create-role")} type="submit">Добавить роль</Button>
       </div>
-      <div className="div-table">
+      <div className={styles.div_table}>
         <Table />
       </div>
       <Footer/>

@@ -63,7 +63,7 @@
     height: 71px;
 }
 
-.div-conteiner {
+.div_container {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -123,11 +123,11 @@
     grid-area: 1 / 1;
 }
 
-.div-title {
+.div_title {
     margin-top: 40px;
 }
 
-.page-title {
+.page_title {
     color: #1B4E9B;
     font-family: 'Montserrat SemiBold', sans-serif;
     font-size: 32px;
@@ -136,7 +136,7 @@
     margin-right: 205px;
 }
 
-.div-table {
+.div_table {
     margin-left: 58px;
     margin-right: 58px;
     margin-top: 20px;

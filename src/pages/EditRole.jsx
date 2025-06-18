@@ -82,6 +82,16 @@ const EditRole = () => {
           <label className="text-checkbox">Права на чтение</label>
           </div>
 
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Права на редактирование</label>
+          </div>
+
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Права на удаление</label>
+          </div>
+
           <Button className="button">Сохранить</Button>
         </div>
       </div>

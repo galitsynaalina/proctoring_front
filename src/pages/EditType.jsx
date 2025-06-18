@@ -82,6 +82,26 @@ const EditType = () => {
           <label className="text-checkbox">Лишний человек</label>
           </div>
 
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Другой человек</label>
+          </div>
+
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Вгляд в сторону</label>
+          </div>
+
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Разговор</label>
+          </div>
+
+          <div className="div-checkbox">
+          <input type="checkbox" className="checkbox" />
+          <label className="text-checkbox">Подсказки</label>
+          </div>
+
           <Button className="button">Сохранить</Button>
         </div>
       </div>

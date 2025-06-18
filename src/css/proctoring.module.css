@@ -5,56 +5,8 @@
         url('/public/fonts/Montserrat-SemiBold.ttf') format('ttf');
 }
 
-.header-style {
-    background-color: #1B4E9B;
-    height: 71px;
-}
 
-.username {
-    width: 137px;
-    height: 22px;
-    text-align: right;
-    font-family: 'Montserrat Bold', sans-serif;
-    font-size: 18px;
-    color: #FFFFFF;
-    margin-right: 0;
-    margin-top: 18px;
-    margin-bottom: 18px;
-    font-weight: bold;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.button-exit {
-    width: 35px;
-    height: 35px;
-    margin-left: 10px;
-    margin-right: 58px;
-    margin-top: 18px;
-    margin-bottom: 18px;
-    border: none;
-    color: #FFFFFF;
-    background-color: transparent;
-    background-image: url('/public/images/Logout.svg');
-}
-
-.button-menu {
-    width: 38px;
-    height: 38px;
-    background-image: url('/public/images/Menu.svg');
-    background-color: transparent;
-    border: none;
-    margin-bottom: 18px;
-    margin-left: 17px;
-    margin-top: 15px;
-}
-
-.div-conteiner-header {
-    display: grid;
-    height: 71px;
-}
-
-.div-conteiner {
+.div_container {
     display: flex;
     justify-content: right;
     margin-top: 20px;
@@ -104,22 +56,12 @@
     margin-right: 58px;
 }
 
-.menu-area {
-    grid-area: 1/1;
-}
 
-.user-exit {
-    display: flex;
-    justify-content: flex-end;
-    right: 0;
-    grid-area: 1 / 1;
-}
-
-.div-title {
+.div_title {
     margin-top: 40px;
 }
 
-.page-title {
+.page_title {
     color: #1B4E9B;
     font-family: 'Montserrat SemiBold', sans-serif;
     font-size: 32px;
@@ -128,10 +70,11 @@
     margin-right: 205px;
 }
 
-.div-table {
+.div_table {
     margin-left: 58px;
     margin-right: 58px;
     margin-top: 20px;
     margin-bottom: 32px;
 }
+
 
