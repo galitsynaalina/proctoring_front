@@ -25,7 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/proctoring-results" element={<ProctoringResults />} />
-        <Route path="/edit-proctoring-results" element={<EditResults />} />
+        <Route path="/edit-proctoring-results/:id" element={<EditResults />} />
 
         <Route path="/roles" element={<Roles />} />
         <Route path="/edit-role" element={<EditRole />} />

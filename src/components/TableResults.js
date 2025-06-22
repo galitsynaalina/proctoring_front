@@ -1,11 +1,14 @@
 import api from "../api/api";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "../css/table.css";
 import DeleteModal from "../pages/DeleteModal";
 
 const Table = () => {
+
+    const navigate = useNavigate();
 
     const [modalActive, setModalActive] = useState(false);
 
@@ -49,14 +52,14 @@ const Table = () => {
         return <button className="button-delete" name="button-delete" onClick={() => setModalActive(true)} />;
     };
 
-    const button_edit = () => {
-        return <button className="button-edit" name="button-edit" />;
+    const button_edit = (id) => {
+        return <button className="button-edit" name="button-edit" onClick={() => navigate(`/edit-proctoring-results/${id}`)}/>;
     };
 
 
     return (
         <div>
-            <DataTable stripedRows paginator rows={10} value={results} tableStyle={{ minWidth: '50rem' }}>
+            <DataTable stripedRows paginator rows={10} dataKey="id" value={results} tableStyle={{ minWidth: '50rem' }}>
                 <Column field="userName" header="Студент" className="table-text" headerClassName="table-header-text"></Column>
                 <Column field="subjectName" header="Предмет" className="table-text" headerClassName="table-header-text"></Column>
                 <Column field="proctoringName" header="Тип прокторинга" className="table-text" headerClassName="table-header-text"></Column>
@@ -67,7 +70,7 @@ const Table = () => {
                 <Column field="detectedMouthOpening" header="Разговор" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
                 <Column field="detectedHintsOutside" header="Подсказки" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
                 <Column style={{ minWidth: '30px' }} body={button_delete} ></Column>
-                <Column body={button_edit}></Column>
+                <Column body={(rowData) => button_edit(rowData.id)}></Column>
             </DataTable>
             <DeleteModal active={modalActive} setActive={setModalActive} />
         </div>
