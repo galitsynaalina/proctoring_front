@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "../css/delete_modal.css";
 import { Button } from 'primereact/button';
 

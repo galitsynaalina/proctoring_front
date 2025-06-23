@@ -13,6 +13,20 @@ const ProctoringResults = () => {
 
   const [visible, setVisible] = useState(false);
 
+  const [filters, setFilters] = useState({
+    studentName: '',
+    subjectName: '',
+    proctoringName: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <div>
       <div>
@@ -69,12 +83,18 @@ const ProctoringResults = () => {
         <h3 className={styles.page_title}>Результаты прокторинга</h3>
       </div>
       <div className={styles.div_search}>
-        <input className={styles.search_by_student} name="search_by_student" type="text" placeholder="Поиск по студенту" />
-        <input className={styles.search_by_subject} name="search_by_subject" type="text" placeholder="Поиск по предмету" />
-        <input className={styles.search_by_type} name="search_by_type" type="text" placeholder="Поиск по типу" />
+        <input className={styles.search_by_student} name="studentName" type="text" placeholder="Поиск по студенту"
+          value={filters.studentName}
+          onChange={handleChange} />
+        <input className={styles.search_by_subject} name="subjectName" type="text" placeholder="Поиск по предмету"
+          value={filters.subjectName}
+          onChange={handleChange} />
+        <input className={styles.search_by_type} name="proctoringName" type="text" placeholder="Поиск по типу"
+          value={filters.proctoringName}
+          onChange={handleChange} />
       </div>
       <div className={styles.div_table}>
-        <Table />
+        <Table filters={filters} />
       </div>
       <div>
         <Footer />
