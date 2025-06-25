@@ -1,5 +1,6 @@
 import api from "../api/api";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/create_user.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -12,10 +13,22 @@ import { Dropdown } from "primereact/dropdown";
 
 const CreateUser = () => {
 
+  const navigate = useNavigate();
+
+  const username = localStorage.getItem('username');
+
   const [visible, setVisible] = useState(false);
-  const [results, setResults] = useState([]);
-  const [roles, setRoles] = useState([]); 
-  const [selectedRole, setSelectedRole] = useState(null);
+  const [roles, setRoles] = useState([]);
+
+  const [formData, setFormData] = useState({
+    fullName: '',
+    login: '',
+    password: '',
+    roleId: null
+  });
+
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -33,6 +46,59 @@ const CreateUser = () => {
 
     fetchRoles();
   }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+
+    if (value !== formData.password) {
+      setPasswordError('Пароли не совпадают');
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const handleRoleChange = (e) => {
+    setFormData(prev => ({ ...prev, roleId: e.value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.fullName || !formData.login || !formData.password || !formData.roleId) {
+      alert('Заполните все поля');
+      return;
+    }
+
+    if (formData.password !== confirmPassword) {
+      setPasswordError('Пароли не совпадают');
+      return;
+    }
+
+    api.post('v1/user', formData)
+      .then((response) => {
+        if (response.status === 201) {
+          setFormData({
+            fullName: '',
+            login: '',
+            password: '',
+            roleId: null
+          });
+          setConfirmPassword('');
+          setPasswordError('');
+          navigate("/users");
+        }
+      })
+      .catch((error) => {
+        console.error('Ошибка при создании пользователя:', error);
+        alert('Не удалось создать пользователя.');
+      });
+  };
 
   return (
     <div>
@@ -60,12 +126,16 @@ const CreateUser = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -80,7 +150,7 @@ const CreateUser = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -92,24 +162,40 @@ const CreateUser = () => {
       <div className="div-container-edit">
         <div className="div-content">
           <span className="input-name-active">ФИО</span>
-          <input className="input-text-active" type="text" />
+          <input className="input-text-active" type="text" name="fullName"
+            value={formData.fullName}
+            onChange={handleInputChange} />
 
           <span className="input-name-active">Логин</span>
-          <input className="input-text-active" type="text" />
+          <input className="input-text-active" type="text" name="login"
+            value={formData.login}
+            onChange={handleInputChange} />
 
           <span className="input-name-active">Пароль</span>
-          <input className="input-text-active" type="password" />
+          <input className="input-text-active" type="password" name="password"
+            value={formData.password}
+            onChange={(e) => {
+              setFormData(prev => ({ ...prev, password: e.target.value }));
+              if (confirmPassword && e.target.value !== confirmPassword) {
+                setPasswordError('Пароли не совпадают');
+              } else {
+                setPasswordError('');
+              }
+            }} />
 
           <span className="input-name-active">Подтверждение пароля</span>
-          <input className="input-text-active" type="password" />
+          <input className="input-text-active" type="password" name="confirmPassword"
+            onChange={handleConfirmPasswordChange} />
+
+          {passwordError && <div style={{ color: 'red', marginBottom: '10px', marginLeft: '20px' }}>{passwordError}</div>}
 
           <span className="input-name-active">Роль</span>
           <Dropdown className="input-text-active" type="text"
-            value={selectedRole}
+            value={formData.roleId}
             options={roles}
-            onChange={(e) => setSelectedRole(e.value)} />
+            onChange={handleRoleChange} />
 
-          <Button className="button">Сохранить</Button>
+          <Button className="button" onClick={handleSubmit}>Сохранить</Button>
         </div>
       </div>
       <div>

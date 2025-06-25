@@ -28,25 +28,25 @@ function App() {
         <Route path="/edit-proctoring-results/:id" element={<EditResults />} />
 
         <Route path="/roles" element={<Roles />} />
-        <Route path="/edit-role" element={<EditRole />} />
+        <Route path="/edit-role/:id" element={<EditRole />} />
         <Route path="/create-role" element={<CreateRole />} />
 
         <Route path="/users" element={<Users />} />
-        <Route path="/edit-user" element={<EditUser />} />
+        <Route path="/edit-user/:id" element={<EditUser />} />
         <Route path="/create-user" element={<CreateUser />} />
 
         <Route path="/subjects" element={<Subjects />} />
-        <Route path="/edit-subject" element={<EditSubject />} />
+        <Route path="/edit-subject/:id" element={<EditSubject />} />
         <Route path="/create-subject" element={<CreateSubject />} />
 
 
         <Route path="/proctoring-types" element={<ProctoringTypes />} />
-        <Route path="/edit-type" element={<EditType />} />
+        <Route path="/edit-type/:id" element={<EditType />} />
         <Route path="/create-type" element={<CreateType />} />
 
 
         <Route path="/proctoring" element={<Proctoring />} />
-        <Route path="/edit-proctoring" element={<EditProctoring />} />
+        <Route path="/edit-proctoring/:id" element={<EditProctoring />} />
         <Route path="/create-proctoring" element={<CreateProctoring />} />
       </Routes>
     </BrowserRouter>

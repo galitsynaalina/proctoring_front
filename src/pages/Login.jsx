@@ -11,8 +11,12 @@ const Login = () => {
     async function auth(){
         const response = await axios.post("http://localhost:3010/api/v1/authorization/", {login: loginStr, password: passwordStr});
 
-        const token = response.data.token
-        localStorage.setItem("token", token)
+        const token = response.data.token;
+
+        const username = loginStr || 'Пользователь';
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", username); 
     }
 
     const handleSubmit = async (e) => {

@@ -11,6 +11,8 @@ import Footer from "../components/Footer";
 
 const ProctoringResults = () => {
 
+  const username = localStorage.getItem('username');
+
   const [visible, setVisible] = useState(false);
 
   const [filters, setFilters] = useState({
@@ -53,12 +55,16 @@ const ProctoringResults = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -73,7 +79,7 @@ const ProctoringResults = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>

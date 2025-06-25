@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+import api from "../api/api";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/create_type.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -10,7 +12,54 @@ import Footer from "../components/Footer";
 
 const CreateType = () => {
 
+  const navigate = useNavigate();
+  const username = localStorage.getItem('username');
+
   const [visible, setVisible] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    absencePerson: false,
+    extraPerson: false,
+    personSubstitution: false,
+    lookingAway: false,
+    mouthOpening: false,
+    hintsOutside: false
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: checked }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post('v1/proctoring/proctoringType', formData);
+
+      if (response.status === 201) {
+        setFormData({
+          name: '',
+          absencePerson: false,
+          extraPerson: false,
+          personSubstitution: false,
+          lookingAway: false,
+          mouthOpening: false,
+          hintsOutside: false
+        });
+        navigate("/proctoring-types")
+      }
+    } catch (error) {
+      console.error('Ошибка при создании записи:', error);
+    }
+  };
+
 
   return (
     <div>
@@ -38,12 +87,16 @@ const CreateType = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -58,7 +111,7 @@ const CreateType = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -70,19 +123,53 @@ const CreateType = () => {
       <div className="div-container-edit">
         <div className="div-content">
           <span className="input-name-active">Название типа прокторинга</span>
-          <input className="input-text-active" type="text" />
+          <input className="input-text-active" type="text" name="name"
+            value={formData.name}
+            onChange={handleInputChange} />
 
           <div className="div-checkbox">
-          <input type="checkbox" className="checkbox" />
-          <label className="text-checkbox">Отсутствие студента</label>
+            <input type="checkbox" name="absencePerson"
+              checked={formData.absencePerson}
+              onChange={handleCheckboxChange} className="checkbox" />
+            <label className="text-checkbox">Отсутствие студента</label>
           </div>
 
           <div className="div-checkbox">
-          <input type="checkbox" className="checkbox" />
-          <label className="text-checkbox">Лишний человек</label>
+            <input type="checkbox" name="extraPerson"
+              checked={formData.extraPerson}
+              onChange={handleCheckboxChange} className="checkbox" />
+            <label className="text-checkbox">Лишний человек</label>
           </div>
 
-          <Button className="button">Сохранить</Button>
+          <div className="div-checkbox">
+            <input type="checkbox" name="personSubstitution"
+              checked={formData.personSubstitution}
+              onChange={handleCheckboxChange} className="checkbox" />
+            <label className="text-checkbox">Другой человек</label>
+          </div>
+
+          <div className="div-checkbox">
+            <input type="checkbox" name="lookingAway"
+              checked={formData.lookingAway}
+              onChange={handleCheckboxChange} className="checkbox" />
+            <label className="text-checkbox">Вгляд в сторону</label>
+          </div>
+
+          <div className="div-checkbox">
+            <input type="checkbox" name="mouthOpening"
+              checked={formData.mouthOpening}
+              onChange={handleCheckboxChange} className="checkbox" />
+            <label className="text-checkbox">Разговор</label>
+          </div>
+
+          <div className="div-checkbox">
+            <input type="checkbox" name="hintsOutside"
+              checked={formData.hintsOutside}
+              onChange={handleCheckboxChange} className="checkbox" />
+            <label className="text-checkbox">Подсказки</label>
+          </div>
+
+          <Button className="button" onClick={handleSubmit}>Сохранить</Button>
         </div>
       </div>
       <div>

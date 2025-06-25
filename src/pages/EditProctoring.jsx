@@ -11,6 +11,8 @@ import { Dropdown } from "primereact/dropdown";
 
 const EditProctoring = () => {
 
+  const username = localStorage.getItem('username');
+
   const [visible, setVisible] = useState(false);
 
   return (
@@ -39,12 +41,16 @@ const EditProctoring = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -59,7 +65,7 @@ const EditProctoring = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>

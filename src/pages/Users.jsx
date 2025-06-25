@@ -1,19 +1,31 @@
-import React, { useState} from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../css/users.module.css";
 import "../css/sidebar.css"
-// import "@radix-ui/themes/styles.css";
-// import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-// import { Table, Theme } from "@radix-ui/themes";
 import Table from "../components/TableUsers";
 
 const Users = () => {
 
+  const navigate = useNavigate();
+  const username = localStorage.getItem('username');
+
   const [visible, setVisible] = useState(false);
+  const [filters, setFilters] = useState({
+    fullName: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   return (
     <div>
@@ -32,7 +44,7 @@ const Users = () => {
                           <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
-                          <a href="/proctoring-results" className="menu-item">
+                          <a href="/proctoring-results" className="menu-item" >
                             <div className="menu-item-text">Результаты</div>
                           </a>
                           <a href="/proctoring-types" className="menu-item" >
@@ -41,12 +53,16 @@ const Users = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item">
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item">
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -61,7 +77,7 @@ const Users = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -71,11 +87,13 @@ const Users = () => {
         <h3 className={styles.table_title}>Пользователи</h3>
       </div>
       <div className={styles.div_container}>
-          <input className={styles.search_by_fio} name="search_by_fio" type="text" placeholder="Поиск по ФИО" />
-          <Button className={styles.button}>Добавить пользователя</Button>
+        <input className={styles.search_by_fio} name="fullName" type="text" placeholder="Поиск по ФИО"
+          value={filters.name}
+          onChange={handleChange} />
+        <Button className={styles.button} onClick={() => navigate("/create-user")}>Добавить пользователя</Button>
       </div>
       <div className={styles.div_table}>
-        <Table />
+        <Table filters={filters} />
       </div>
       <div>
         <footer className="footer-style" />

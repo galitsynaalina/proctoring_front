@@ -1,4 +1,5 @@
-import React, { useState} from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../css/subjects.module.css";
 import "../css/sidebar.css";
 import "../css/sidebar.css"
@@ -13,13 +14,27 @@ import Footer from "../components/Footer";
 
 const Subjects = () => {
 
+  const navigate = useNavigate();
+  const username = localStorage.getItem('username');
+
   const [visible, setVisible] = useState(false);
+  const [filters, setFilters] = useState({
+    name: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   return (
     <div>
       <div>
         <header className="header-style">
-          <div className="div-conteiner-header">
+          <div className="div-container-header">
             <div className="menu-area">
               <Button className="button-menu" onClick={() => { setVisible(true) }} />
               <Sidebar visible={visible}
@@ -41,12 +56,16 @@ const Subjects = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -61,7 +80,7 @@ const Subjects = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -71,11 +90,13 @@ const Subjects = () => {
         <h3 className={styles.table_title}>Предметы</h3>
       </div>
       <div className={styles.div_container}>
-        <input className={styles.search_by_subject} name="search_by_subject" type="text" placeholder="Поиск по предмету" />
-        <Button className={styles.button}>Добавить предмет</Button>
+        <input className={styles.search_by_subject} name="name" type="text" placeholder="Поиск по предмету"
+          value={filters.name}
+          onChange={handleChange} />
+        <Button className={styles.button} onClick={() => navigate("/create-subject")}>Добавить предмет</Button>
       </div>
       <div className={styles.div_table}>
-        <Table />
+        <Table filters={filters} />
       </div>
       <div>
         <Footer />

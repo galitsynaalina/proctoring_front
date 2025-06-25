@@ -1,4 +1,6 @@
-import React, { useState} from "react";
+import api from "../api/api";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/create_role.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -10,7 +12,49 @@ import Footer from "../components/Footer";
 
 const CreateRole = () => {
 
+  const username = localStorage.getItem('username');
+  const navigate = useNavigate();
+
   const [visible, setVisible] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    rightsCreate: false,
+    rightsRead: false,
+    rightsUpdate: false,
+    rightsDelete: false
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: checked }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post('v1/role', formData);
+
+      if (response.status === 201) {
+        setFormData({
+          name: '',
+          rightsCreate: false,
+          rightsRead: false,
+          rightsUpdate: false,
+          rightsDelete: false
+        });
+        navigate("/roles")
+      }
+    } catch (error) {
+      console.error('Ошибка при создании записи:', error);
+    }
+  };
 
   return (
     <div>
@@ -38,12 +82,16 @@ const CreateRole = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -58,7 +106,7 @@ const CreateRole = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -70,25 +118,45 @@ const CreateRole = () => {
       <div className="div-container-edit">
         <div className="div-content">
           <span className="input-name-active">Название роли</span>
-          <input className="input-text-active" name="input-fio" type="text" />
+          <input className="input-text-active" name="name" type="text"
+            value={formData.name}
+            onChange={handleInputChange} />
 
           <div className="div-checkbox">
-          <input type="checkbox" className="checkbox" />
-          <label className="text-checkbox">Права на создание</label>
+            <input type="checkbox" className="checkbox" name="rightsCreate"
+              checked={formData.rightsCreate}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на создание</label>
           </div>
 
           <div className="div-checkbox">
-          <input type="checkbox" className="checkbox" />
-          <label className="text-checkbox">Права на чтение</label>
+            <input type="checkbox" className="checkbox" name="rightsRead"
+              checked={formData.rightsRead}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox" name="rightsRead">Права на чтение</label>
           </div>
 
-          <Button className="button">Создать</Button>
+          <div className="div-checkbox">
+            <input type="checkbox" className="checkbox" name="rightsUpdate"
+              checked={formData.rightsUpdate}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на редактирование</label>
+          </div>
+
+          <div className="div-checkbox">
+            <input type="checkbox" className="checkbox" name="rightsDelete"
+              checked={formData.rightsDelete}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на удаление</label>
+          </div>
+
+          <Button onClick={handleSubmit} className="button">Создать</Button>
         </div>
       </div>
       <div>
         <Footer />
       </div>
-    </div>
+    </div >
   );
 };
 

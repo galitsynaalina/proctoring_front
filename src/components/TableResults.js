@@ -48,6 +48,7 @@ const Table = ({ filters }) => {
         try {
             await api.delete(`v1/proctoring-result/${id}`);
             setResults(results.filter(item => item.id !== id));
+            setModalActive(false);
         } catch (error) {
             console.error('Ошибка при удалении:', error);
         }

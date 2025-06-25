@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/roles.module.css";
 import "../css/sidebar.css"
@@ -14,8 +14,22 @@ import Footer from "../components/Footer";
 
 const Roles = () => {
 
+  const username = localStorage.getItem('username');
+
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+
+  const [filters, setFilters] = useState({
+    name: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   return (
     <div>
@@ -43,12 +57,16 @@ const Roles = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -63,7 +81,7 @@ const Roles = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -73,13 +91,15 @@ const Roles = () => {
         <h3 className={styles.page_title}>Роли</h3>
       </div>
       <div class={styles.div_container}>
-          <input className={styles.search_by_role} name="search_by_role" type="text" placeholder="Поиск роли" />
-          <Button className={styles.button} onClick={() => navigate("/create-role")} type="submit">Добавить роль</Button>
+        <input className={styles.search_by_role} name="name" type="text" placeholder="Поиск роли"
+          value={filters.name}
+          onChange={handleChange} />
+        <Button className={styles.button} onClick={() => navigate("/create-role")} type="submit">Добавить роль</Button>
       </div>
       <div className={styles.div_table}>
-        <Table />
+        <Table filters={filters} />
       </div>
-      <Footer/>
+      <Footer />
     </div >
   );
 };

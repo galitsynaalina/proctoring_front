@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+import api from "../api/api";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/create_subject.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -10,7 +12,36 @@ import Footer from "../components/Footer";
 
 const CreateSubject = () => {
 
+  const username = localStorage.getItem('username');
+  const navigate = useNavigate();
+
   const [visible, setVisible] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post('v1/subject', formData);
+
+      if (response.status === 201) {
+        setFormData({
+          name: ''
+        });
+        navigate("/subjects")
+      }
+    } catch (error) {
+      console.error('Ошибка при создании записи:', error);
+    }
+  };
 
   return (
     <div>
@@ -38,12 +69,16 @@ const CreateSubject = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -58,7 +93,7 @@ const CreateSubject = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -70,9 +105,11 @@ const CreateSubject = () => {
       <div className="div-container-edit">
         <div className="div-content">
           <span className="input-name-active">Название предмета</span>
-          <input className="input-text-active" type="text" />
+          <input className="input-text-active" type="text" name="name"
+            value={formData.name}
+            onChange={handleInputChange} />
 
-          <Button className="button">Сохранить</Button>
+          <Button className="button" onClick={handleSubmit}>Сохранить</Button>
         </div>
       </div>
       <div>

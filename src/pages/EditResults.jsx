@@ -1,6 +1,5 @@
-import axios from "axios";
 import api from "../api/api";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../css/edit_results.css";
 import "../css/footer.css"
@@ -12,6 +11,8 @@ import { Button } from 'primereact/button';
 import Footer from "../components/Footer";
 
 const EditResults = () => {
+
+  const username = localStorage.getItem('username');
 
   const { id } = useParams();
 
@@ -106,12 +107,16 @@ const EditResults = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -126,7 +131,7 @@ const EditResults = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -154,43 +159,43 @@ const EditResults = () => {
 
           <div className="div-checkbox">
             <input type="checkbox" name="detectedAbsencePerson"
-            checked={formData.detectedAbsencePerson}
-            onChange={handleCheckboxChange} className="checkbox" />
+              checked={formData.detectedAbsencePerson}
+              onChange={handleCheckboxChange} className="checkbox" />
             <label className="text-checkbox">Отсутствие студента</label>
           </div>
 
           <div className="div-checkbox">
-            <input type="checkbox" name="detectedExtraPerson" 
-            checked={formData.detectedExtraPerson}
-            onChange={handleCheckboxChange} className="checkbox" />
+            <input type="checkbox" name="detectedExtraPerson"
+              checked={formData.detectedExtraPerson}
+              onChange={handleCheckboxChange} className="checkbox" />
             <label className="text-checkbox">Лишний человек</label>
           </div>
 
           <div className="div-checkbox">
-            <input type="checkbox" name="detectedPersonSubstitution" 
-            checked={formData.detectedPersonSubstitution}
-            onChange={handleCheckboxChange} className="checkbox" />
+            <input type="checkbox" name="detectedPersonSubstitution"
+              checked={formData.detectedPersonSubstitution}
+              onChange={handleCheckboxChange} className="checkbox" />
             <label className="text-checkbox">Другой человек</label>
           </div>
 
           <div className="div-checkbox">
-            <input type="checkbox" name="detectedLookingAway" 
-            checked={formData.detectedLookingAway}
-            onChange={handleCheckboxChange} className="checkbox" />
+            <input type="checkbox" name="detectedLookingAway"
+              checked={formData.detectedLookingAway}
+              onChange={handleCheckboxChange} className="checkbox" />
             <label className="text-checkbox">Вгляд в сторону</label>
           </div>
 
           <div className="div-checkbox">
-            <input type="checkbox" name="detectedMouthOpening" 
-            checked={formData.detectedMouthOpening}
-            onChange={handleCheckboxChange} className="checkbox" />
+            <input type="checkbox" name="detectedMouthOpening"
+              checked={formData.detectedMouthOpening}
+              onChange={handleCheckboxChange} className="checkbox" />
             <label className="text-checkbox">Разговор</label>
           </div>
 
           <div className="div-checkbox">
-            <input type="checkbox" name="detectedHintsOutside" 
-            checked={formData.detectedHintsOutside}
-            onChange={handleCheckboxChange} className="checkbox" />
+            <input type="checkbox" name="detectedHintsOutside"
+              checked={formData.detectedHintsOutside}
+              onChange={handleCheckboxChange} className="checkbox" />
             <label className="text-checkbox">Подсказки</label>
           </div>
 

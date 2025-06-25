@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../css/proctoring_types.module.css";
 import "../css/sidebar.css"
 import "@radix-ui/themes/styles.css";
@@ -13,13 +14,16 @@ import Footer from "../components/Footer";
 
 const ProctoringTypes = () => {
 
+  const username = localStorage.getItem('username');
+
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div>
       <div>
         <header className="header-style">
-          <div className="div-conteiner-header">
+          <div className="div-container-header">
             <div className="menu-area">
               <Button className="button-menu" onClick={() => { setVisible(true) }} />
               <Sidebar visible={visible}
@@ -41,12 +45,16 @@ const ProctoringTypes = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -61,7 +69,7 @@ const ProctoringTypes = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -70,9 +78,9 @@ const ProctoringTypes = () => {
       <div className={styles.div_title}>
         <h3 className={styles.page_title}>Типы прокторинга</h3>
       </div>
-      <div class={styles.div_container}>
+      <div className={styles.div_container}>
         {/* <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" /> */}
-        <Button className={styles.button}>Добавить тип прокторинга</Button>
+        <Button className={styles.button} onClick={() => navigate("/create-type")}>Добавить тип прокторинга</Button>
       </div>
       <div className={styles.div_table}>
         <Table />

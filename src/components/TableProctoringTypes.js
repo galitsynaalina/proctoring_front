@@ -1,10 +1,17 @@
 import api from "../api/api";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import "../css/table.css"
+import "../css/table.css";
+import DeleteModal from "../pages/DeleteModal";
 
 const Table = () => {
+    const navigate = useNavigate();
+
+    const [modalActive, setModalActive] = useState(false);
+    const [recordIdToDelete, setRecordIdToDelete] = useState(null);
+
     const [results, setResults] = useState([]);
 
     async function fetchResults() {
@@ -25,8 +32,8 @@ const Table = () => {
 
                 if (typeof value === "boolean") {
                     newRow[key] = value
-                        ? <img src="../images/success.svg" />
-                        : <img src="../images/error.svg" />;
+                        ? <img src="../images/success.svg" alt="success" />
+                        : <img src="../images/error.svg" alt="error" />;
                 } else {
                     newRow[key] = value;
                 }
@@ -41,16 +48,30 @@ const Table = () => {
         prepareResults()
     }, [])
 
-    const button_delete = () => {
-        return <button className="button-delete" name="button-delete" />;
+    const handleDelete = async (id) => {
+        try {
+            await api.delete(`v1/proctoring/proctoringType/${id}`);
+            setResults(results.filter(item => item.id !== id));
+            setModalActive(false);
+        } catch (error) {
+            console.error('Ошибка при удалении:', error);
+        }
     };
 
-    const button_edit = () => {
-        return <button className="button-edit" name="button-edit" />;
+    const button_delete = (id) => {
+        return <button className="button-delete" name="button-delete" onClick={() => {
+            setModalActive(true);
+            setRecordIdToDelete(id);
+        }}/>;
+    };
+
+    const button_edit = (id) => {
+        return <button className="button-edit" name="button-edit" onClick={() => navigate(`/edit-type/${id}`)} />;
     };
 
     return (
-        <DataTable stripedRows paginator rows={10} value={results} tableStyle={{ minWidth: '50rem' }}>
+        <div>
+        <DataTable stripedRows paginator rows={10} value={results} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
             <Column field="name" header="Название" className="table-text" headerClassName="table-header-text"></Column>
             <Column field="absencePerson" header="Отсутствие студента" headerClassName="table-header-text"></Column>
             <Column field="extraPerson" header="Лишний человек" headerClassName="table-header-text"></Column>
@@ -58,10 +79,11 @@ const Table = () => {
             <Column field="lookingAway" header="Взгляд в сторону" headerClassName="table-header-text"></Column>
             <Column field="mouthOpening" header="Разговор" headerClassName="table-header-text"></Column>
             <Column field="hintsOutside" header="Подсказки" headerClassName="table-header-text"></Column>
-            <Column field="" header="" style={{ width: "50px", minWidth: '30px' }} body={button_delete}></Column>
-            <Column field="" header="" body={button_edit} style={{ width: "50px" }}></Column>
-
+            <Column field="" header="" style={{ width: "50px", minWidth: '30px' }} body={(rowData) => button_delete(rowData.id)}></Column>
+            <Column field="" header="" body={(rowData) => button_edit(rowData.id)} style={{ width: "50px" }}></Column>
         </DataTable>
+        <DeleteModal active={modalActive} setActive={setModalActive} onConfirm={() => handleDelete(recordIdToDelete)} />
+        </div>
     );
 };
 

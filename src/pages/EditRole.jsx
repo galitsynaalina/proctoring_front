@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+import api from "../api/api";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "../css/edit_role.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
@@ -10,7 +12,65 @@ import Footer from "../components/Footer";
 
 const EditRole = () => {
 
+  const username = localStorage.getItem('username');
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const [visible, setVisible] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    rightsCreate: false,
+    rightsRead: false,
+    rightsUpdate: false,
+    rightsDelete: false
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(`v1/role/${id}`);
+        const data = response.data;
+
+        setFormData({
+          name: data.name || '',
+          rightsCreate: Boolean(data.rightsCreate),
+          rightsRead: Boolean(data.rightsRead),
+          rightsUpdate: Boolean(data.rightsUpdate),
+          rightsDelete: Boolean(data.rightsDelete)
+        });
+      } catch (error) {
+        console.error('Ошибка при загрузке данных:', error);
+        alert('Не удалось загрузить данные.');
+        navigate('/roles'); // перенаправление обратно
+      }
+    };
+
+    fetchData();
+  }, [id, navigate]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: checked }));
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await api.patch(`/v1/role/${id}`, formData);
+      console.log('Данные успешно обновлены:', response.data);
+      alert('Результат успешно сохранён!');
+      navigate('/roles');
+    } catch (error) {
+      console.error('Ошибка при сохранении:', error);
+      alert('Не удалось сохранить результат.');
+    }
+  };
 
   return (
     <div>
@@ -38,12 +98,16 @@ const EditRole = () => {
                           <a href="/proctoring" className="menu-item" >
                             <div className="menu-item-text">Прокторинги</div>
                           </a>
-                          <a href="/roles" className="menu-item" >
-                            <div className="menu-item-text">Роли</div>
-                          </a>
-                          <a href="/users" className="menu-item" >
-                            <div className="menu-item-text">Пользователи</div>
-                          </a>
+                          {username === 'admin' && (
+                            <>
+                              <a href="/roles" className="menu-item">
+                                <div className="menu-item-text">Роли</div>
+                              </a>
+                              <a href="/users" className="menu-item">
+                                <div className="menu-item-text">Пользователи</div>
+                              </a>
+                            </>
+                          )}
                           <a href="/subjects" className="menu-item">
                             <div className="menu-item-text">Предметы</div>
                           </a>
@@ -58,7 +122,7 @@ const EditRole = () => {
               ></Sidebar>
             </div>
             <div className="user-exit">
-              <span className="username">Пользователь</span>
+              <span className="username">{username}</span>
               <button className="button-exit" name="button-exit"></button>
             </div>
           </div>
@@ -69,30 +133,41 @@ const EditRole = () => {
       </div>
       <div className="div-container-edit">
         <div className="div-content">
-          <span className="input-name">Название роли</span>
-          <input className="input-text" type="text" />
+          <span className="input-name-active">Название роли</span>
+          <input className="input-text-active" name="name" type="text"
+            value={formData.name}
+            onChange={handleInputChange} />
 
           <div className="div-checkbox">
-          <input type="checkbox" className="checkbox" />
-          <label className="text-checkbox">Права на создание</label>
+            <input type="checkbox" className="checkbox" name="rightsCreate"
+              checked={formData.rightsCreate}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на создание</label>
           </div>
 
           <div className="div-checkbox">
-          <input type="checkbox" className="checkbox" />
-          <label className="text-checkbox">Права на чтение</label>
+            <input type="checkbox" className="checkbox" name="rightsRead"
+              checked={formData.rightsRead}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox" name="rightsRead">Права на чтение</label>
           </div>
 
           <div className="div-checkbox">
-          <input type="checkbox" className="checkbox" />
-          <label className="text-checkbox">Права на редактирование</label>
+            <input type="checkbox" className="checkbox" name="rightsUpdate"
+              checked={formData.rightsUpdate}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на редактирование</label>
           </div>
 
           <div className="div-checkbox">
-          <input type="checkbox" className="checkbox" />
-          <label className="text-checkbox">Права на удаление</label>
+            <input type="checkbox" className="checkbox" name="rightsDelete"
+              checked={formData.rightsDelete}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на удаление</label>
           </div>
 
-          <Button className="button">Сохранить</Button>
+
+          <Button className="button" onClick={handleSave}>Сохранить</Button>
         </div>
       </div>
       <div>
