@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @font-face {
     font-family: "Montserrat";
     src:
@@ -40,6 +43,7 @@ body {
 }
 
 .div-center {
+    justify-items: center;
     align-items: center;
     text-align: center;
 }

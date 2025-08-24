@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "strict": true,
+    "rootDir": ".",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "noErrorTruncation": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "outDir": "./built",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["typings.d.ts","src/**/*", "src/css/*"], //Список включаемых файлов
+  "exclude": [] //Список исключаемых файлов
+}
