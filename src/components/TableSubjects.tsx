@@ -4,6 +4,10 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "../css/table.css"
 
+interface Filters {
+    name: string;
+}
+
 interface Subjects {
     id: number;
     name: string;
@@ -20,7 +24,7 @@ type PreparedRow = {
     [key: string]: any;
 };
 
-const Table = () => {
+const Table = ({ filters }: { filters: Filters }) => {
     const [results, setResults] = useState<PreparedRow[]>([]);
 
     async function fetchResults(): Promise<Subjects[]> {

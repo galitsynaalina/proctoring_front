@@ -1,34 +1,38 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../css/subjects.module.css";
-import "../css/sidebar.css";
+import styles from "../css/users.module.css";
 import "../css/sidebar.css"
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-// import { Table, Theme } from "@radix-ui/themes";
-import Table from "../components/TableSubjects";
-import Footer from "../components/Footer";
+import Table from "../components/TableUsers";
 
-const Subjects = () => {
+interface Filters {
+  fullName: string;
+}
+
+const closeIconRef = useRef<Button>(null);
+
+const Users = () => {
 
   const navigate = useNavigate();
   const username = localStorage.getItem('username');
 
   const [visible, setVisible] = useState(false);
-  const [filters, setFilters] = useState({
-    name: ''
+  const [filters, setFilters] = useState<Filters>({
+    fullName: '' 
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<any>) => {     
     const { name, value } = e.target;
     setFilters(prev => ({
       ...prev,
       [name]: value
     }));
   };
+
 
   return (
     <div>
@@ -44,7 +48,7 @@ const Subjects = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button className="button-menu" type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)}></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
@@ -87,22 +91,22 @@ const Subjects = () => {
         </header>
       </div>
       <div className={styles.div_title}>
-        <h3 className={styles.table_title}>Предметы</h3>
+        <h3 className={styles.table_title}>Пользователи</h3>
       </div>
       <div className={styles.div_container}>
-        <input className={styles.search_by_subject} name="name" type="text" placeholder="Поиск по предмету"
-          value={filters.name}
+        <input className={styles.search_by_fio} name="fullName" type="text" placeholder="Поиск по ФИО"
+          value={filters.fullName}
           onChange={handleChange} />
-        <Button className={styles.button} onClick={() => navigate("/create-subject")}>Добавить предмет</Button>
+        <Button className={styles.button} onClick={() => navigate("/create-user")}>Добавить пользователя</Button>
       </div>
       <div className={styles.div_table}>
         <Table filters={filters} />
       </div>
       <div>
-        <Footer />
+        <footer className="footer-style" />
       </div>
     </div >
   );
 };
 
-export default Subjects;
+export default Users;

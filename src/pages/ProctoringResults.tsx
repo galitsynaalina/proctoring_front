@@ -1,33 +1,40 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "../css/users.module.css";
-import "../css/sidebar.css"
+import  { useState } from "react";
+import styles from "../css/proctoring_results.module.css";
+import "../css/footer.css"
+import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import Table from "../components/TableUsers";
+import Table from "../components/TableResults";
+import Footer from "../components/Footer";
 
-const Users = () => {
+interface Filters {
+  studentName: string;
+  subjectName: string;
+  proctoringName: string;
+}
 
-  const navigate = useNavigate();
+
+const ProctoringResults = () => {
+
   const username = localStorage.getItem('username');
 
   const [visible, setVisible] = useState(false);
-  const [filters, setFilters] = useState({
-    fullName: ''
+
+  const [filters, setFilters] = useState<Filters>({
+    studentName: '',
+    subjectName: '',
+    proctoringName: ''
   });
 
-  // const handleChange = (e: React.ChangeEvent<any>) => {     <-- для ts
-    const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
     setFilters(prev => ({
       ...prev,
       [name]: value
     }));
   };
-
 
   return (
     <div>
@@ -43,7 +50,7 @@ const Users = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button className="button-menu" type="button"  ref={closeIconRef} onClick={(e) => hide(e)}></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
@@ -86,22 +93,27 @@ const Users = () => {
         </header>
       </div>
       <div className={styles.div_title}>
-        <h3 className={styles.table_title}>Пользователи</h3>
+        <h3 className={styles.page_title}>Результаты прокторинга</h3>
       </div>
-      <div className={styles.div_container}>
-        <input className={styles.search_by_fio} name="fullName" type="text" placeholder="Поиск по ФИО"
-          value={filters.name}
+      <div className={styles.div_search}>
+        <input className={styles.search_by_student} name="studentName" type="text" placeholder="Поиск по студенту"
+          value={filters.studentName}
           onChange={handleChange} />
-        <Button className={styles.button} onClick={() => navigate("/create-user")}>Добавить пользователя</Button>
+        <input className={styles.search_by_subject} name="subjectName" type="text" placeholder="Поиск по предмету"
+          value={filters.subjectName}
+          onChange={handleChange} />
+        <input className={styles.search_by_type} name="proctoringName" type="text" placeholder="Поиск по типу"
+          value={filters.proctoringName}
+          onChange={handleChange} />
       </div>
       <div className={styles.div_table}>
         <Table filters={filters} />
       </div>
       <div>
-        <footer className="footer-style" />
+        <Footer />
       </div>
-    </div >
+    </div>
   );
 };
 
-export default Users;
+export default ProctoringResults;

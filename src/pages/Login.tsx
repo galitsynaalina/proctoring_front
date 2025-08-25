@@ -19,7 +19,7 @@ const Login = () => {
         localStorage.setItem("username", username); 
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.ChangeEvent<any>) => {
         e.preventDefault();
         try {
             await auth();

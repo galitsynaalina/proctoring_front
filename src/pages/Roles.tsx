@@ -1,27 +1,33 @@
-import React, { useState, useRef } from "react";
-import styles from "../css/proctoring_results.module.css";
-import "../css/footer.css"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "../css/roles.module.css";
+import "../css/sidebar.css"
+import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import Table from "../components/TableResults";
+import Table from "../components/TableRoles";
 import Footer from "../components/Footer";
 
-const ProctoringResults = () => {
+interface Filters {
+  name: string;
+}
+
+const Roles = () => {
 
   const username = localStorage.getItem('username');
 
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
-  const [filters, setFilters] = useState({
-    studentName: '',
-    subjectName: '',
-    proctoringName: ''
-  });
+  const [filters, setFilters] = useState<Filters>({
+      name: ''
+    });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
     setFilters(prev => ({
       ...prev,
@@ -43,7 +49,7 @@ const ProctoringResults = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
@@ -86,27 +92,20 @@ const ProctoringResults = () => {
         </header>
       </div>
       <div className={styles.div_title}>
-        <h3 className={styles.page_title}>Результаты прокторинга</h3>
+        <h3 className={styles.page_title}>Роли</h3>
       </div>
-      <div className={styles.div_search}>
-        <input className={styles.search_by_student} name="studentName" type="text" placeholder="Поиск по студенту"
-          value={filters.studentName}
+      <div className={styles.div_container}>
+        <input className={styles.search_by_role} name="name" type="text" placeholder="Поиск роли"
+          value={filters.name}
           onChange={handleChange} />
-        <input className={styles.search_by_subject} name="subjectName" type="text" placeholder="Поиск по предмету"
-          value={filters.subjectName}
-          onChange={handleChange} />
-        <input className={styles.search_by_type} name="proctoringName" type="text" placeholder="Поиск по типу"
-          value={filters.proctoringName}
-          onChange={handleChange} />
+        <Button className={styles.button} onClick={() => navigate("/create-role")} type="submit">Добавить роль</Button>
       </div>
       <div className={styles.div_table}>
         <Table filters={filters} />
       </div>
-      <div>
-        <Footer />
-      </div>
-    </div>
+      <Footer />
+    </div >
   );
 };
 
-export default ProctoringResults;
+export default Roles;

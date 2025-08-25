@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../css/proctoring_types.module.css";
-import "../css/sidebar.css"
+import styles from "../css/proctoring.module.css";
 import "@radix-ui/themes/styles.css";
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -9,10 +8,10 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import Table from "../components/TableProctoringTypes";
+import Table from "../components/TableProctoring";
 import Footer from "../components/Footer";
 
-const ProctoringTypes = () => {
+const Proctoring = () => {
 
   const username = localStorage.getItem('username');
 
@@ -33,7 +32,7 @@ const ProctoringTypes = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
@@ -76,11 +75,11 @@ const ProctoringTypes = () => {
         </header>
       </div>
       <div className={styles.div_title}>
-        <h3 className={styles.page_title}>Типы прокторинга</h3>
+        <h3 className={styles.page_title}>Прокторинг</h3>
       </div>
       <div className={styles.div_container}>
         {/* <input className="search_by_subject" name="search_by_subject" type="text" placeholder="Поиск по предмету" /> */}
-        <Button className={styles.button} onClick={() => navigate("/create-type")}>Добавить тип прокторинга</Button>
+        <Button className={styles.button} onClick={() => navigate("/create-proctoring")}>Добавить прокторинг</Button>
       </div>
       <div className={styles.div_table}>
         <Table />
@@ -92,4 +91,4 @@ const ProctoringTypes = () => {
   );
 };
 
-export default ProctoringTypes;
+export default Proctoring;
