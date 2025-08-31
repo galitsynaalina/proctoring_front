@@ -1,7 +1,7 @@
 import api from "../api/api";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../css/edit_type.css";
+import "../css/edit_role.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -10,66 +10,78 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Footer from "../components/Footer";
 
-const EditType = () => {
+interface RoleData {
+  name: string;
+  rightsCreate: boolean;
+  rightsRead: boolean;
+  rightsUpdate: boolean;
+  rightsDelete: boolean;
+}
+
+interface FormData {
+  name: string;
+  rightsCreate: boolean;
+  rightsRead: boolean;
+  rightsUpdate: boolean;
+  rightsDelete: boolean;
+}
+
+const EditRole = () => {
 
   const username = localStorage.getItem('username');
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
-    absencePerson: false,
-    extraPerson: false,
-    personSubstitution: false,
-    lookingAway: false,
-    mouthOpening: false,
-    hintsOutside: false
+    rightsCreate: false,
+    rightsRead: false,
+    rightsUpdate: false,
+    rightsDelete: false
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`v1/proctoring/ProctoringType/${id}`);
+        const response = await api.get<RoleData>(`v1/role/${id}`);
         const data = response.data;
 
         setFormData({
           name: data.name || '',
-          absencePerson: Boolean(data.absencePerson),
-          extraPerson: Boolean(data.extraPerson),
-          personSubstitution: Boolean(data.personSubstitution),
-          lookingAway: Boolean(data.lookingAway),
-          mouthOpening: Boolean(data.mouthOpening),
-          hintsOutside: Boolean(data.hintsOutside)
+          rightsCreate: Boolean(data.rightsCreate),
+          rightsRead: Boolean(data.rightsRead),
+          rightsUpdate: Boolean(data.rightsUpdate),
+          rightsDelete: Boolean(data.rightsDelete)
         });
       } catch (error) {
         console.error('Ошибка при загрузке данных:', error);
         alert('Не удалось загрузить данные.');
-        navigate('/proctoring-types'); // перенаправление обратно
+        navigate('/roles'); // перенаправление обратно
       }
     };
 
     fetchData();
   }, [id, navigate]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<any>) => {
     const { name, checked } = e.target;
     setFormData(prev => ({ ...prev, [name]: checked }));
   };
 
   const handleSave = async () => {
     try {
-      const response = await api.patch(`/v1/proctoring/ProctoringType/${id}`, formData);
+      const response = await api.patch<RoleData>(`/v1/role/${id}`, formData);
       console.log('Данные успешно обновлены:', response.data);
       alert('Результат успешно сохранён!');
-      navigate('/proctoring-types');
+      navigate('/roles');
     } catch (error) {
       console.error('Ошибка при сохранении:', error);
       alert('Не удалось сохранить результат.');
@@ -90,7 +102,7 @@ const EditType = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
@@ -133,56 +145,43 @@ const EditType = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="page-title">Редактирование типа</h3>
+        <h3 className="page-title">Редактирование роли</h3>
       </div>
       <div className="div-container-edit">
         <div className="div-content">
-          <span className="input-name-active">Название типа прокторинга</span>
-          <input className="input-text-active" type="text" name="name"
+          <span className="input-name-active">Название роли</span>
+          <input className="input-text-active" name="name" type="text"
             value={formData.name}
             onChange={handleInputChange} />
 
           <div className="div-checkbox">
-            <input type="checkbox" name="absencePerson"
-              checked={formData.absencePerson}
-              onChange={handleCheckboxChange} className="checkbox" />
-            <label className="text-checkbox">Отсутствие студента</label>
+            <input type="checkbox" className="checkbox" name="rightsCreate"
+              checked={formData.rightsCreate}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на создание</label>
           </div>
 
           <div className="div-checkbox">
-            <input type="checkbox" name="extraPerson"
-              checked={formData.extraPerson}
-              onChange={handleCheckboxChange} className="checkbox" />
-            <label className="text-checkbox">Лишний человек</label>
+            <input type="checkbox" className="checkbox" name="rightsRead"
+              checked={formData.rightsRead}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на чтение</label>
           </div>
 
           <div className="div-checkbox">
-            <input type="checkbox" name="personSubstitution"
-              checked={formData.personSubstitution}
-              onChange={handleCheckboxChange} className="checkbox" />
-            <label className="text-checkbox">Другой человек</label>
+            <input type="checkbox" className="checkbox" name="rightsUpdate"
+              checked={formData.rightsUpdate}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на редактирование</label>
           </div>
 
           <div className="div-checkbox">
-            <input type="checkbox" name="lookingAway"
-              checked={formData.lookingAway}
-              onChange={handleCheckboxChange} className="checkbox" />
-            <label className="text-checkbox">Вгляд в сторону</label>
+            <input type="checkbox" className="checkbox" name="rightsDelete"
+              checked={formData.rightsDelete}
+              onChange={handleCheckboxChange} />
+            <label className="text-checkbox">Права на удаление</label>
           </div>
 
-          <div className="div-checkbox">
-            <input type="checkbox" name="mouthOpening"
-              checked={formData.mouthOpening}
-              onChange={handleCheckboxChange} className="checkbox" />
-            <label className="text-checkbox">Разговор</label>
-          </div>
-
-          <div className="div-checkbox">
-            <input type="checkbox" name="hintsOutside"
-              checked={formData.hintsOutside}
-              onChange={handleCheckboxChange} className="checkbox" />
-            <label className="text-checkbox">Подсказки</label>
-          </div>
 
           <Button className="button" onClick={handleSave}>Сохранить</Button>
         </div>
@@ -194,4 +193,4 @@ const EditType = () => {
   );
 };
 
-export default EditType;
+export default EditRole;

@@ -9,7 +9,33 @@ import "primereact/resources/primereact.min.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Footer from "../components/Footer";
-import { Dropdown } from "primereact/dropdown";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+
+interface Subject {
+  id: number;
+  name: string;
+}
+
+interface ProctoringType {
+  id: number;
+  name: string;
+}
+
+interface User {
+  id: number;
+  fullName: string;
+}
+
+interface Option {
+  label: string;
+  value: number;
+}
+
+interface FormData {
+  subjectId: number | null;
+  userId: number | null;
+  typeId: number | null;
+}
 
 const CreateProctoring = () => {
   const navigate = useNavigate();
@@ -28,15 +54,15 @@ const CreateProctoring = () => {
     },
   ];
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     subjectId: sujects[0]?.id || null,
     userId: null,
     typeId: null
   });
 
-  const [proctoringTypes, setProctoringTypes] = useState([]);
-  const [subjects, setSubjects] = useState([]);
-  const [students, setStudents] = useState([]);
+  const [proctoringTypes, setProctoringTypes] = useState<Option[]>([]);
+  const [subjects, setSubjects] = useState<Option[]>([]);
+  const [students, setStudents] = useState<Option[]>([]);
 
   const [error, setError] = useState('');
 
@@ -44,8 +70,8 @@ const CreateProctoring = () => {
     const fetchData = async () => {
       try {
         const [typesRes, studentsRes] = await Promise.all([
-          api.get('v1/proctoring/proctoringType'),
-          api.get('v1/user')
+          api.get<ProctoringType[]>('v1/proctoring/proctoringType'),
+          api.get<User[]>('v1/user')
         ]);
 
         setProctoringTypes(typesRes.data.map(t => ({ label: t.name, value: t.id })));
@@ -61,15 +87,15 @@ const CreateProctoring = () => {
   }, []);
 
 
-  const handleProctoringTypeChange = (e) => {
+  const handleProctoringTypeChange = (e: DropdownChangeEvent) => {
     setFormData(prev => ({ ...prev, typeId: e.value }));
   };
 
-  const handleSubjectChange = (e) => {
+  const handleSubjectChange = (e: DropdownChangeEvent) => {
     setFormData(prev => ({ ...prev, subjectId: e.value }));
   };
 
-  const handleStudentChange = (e) => {
+  const handleStudentChange = (e: DropdownChangeEvent) => {
     setFormData(prev => ({ ...prev, userId: e.value }));
   };
 
@@ -103,7 +129,7 @@ const CreateProctoring = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >

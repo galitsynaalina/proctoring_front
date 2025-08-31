@@ -1,8 +1,13 @@
 import "../css/delete_modal.css";
 import { Button } from 'primereact/button';
 
+interface DeleteModalProps {
+  active: boolean;
+  setActive: (active: boolean) => void;
+  onConfirm: () => void;
+}
 
-const DeleteModal = ({ active, setActive, onConfirm }) => {
+const DeleteModal = ({ active, setActive, onConfirm }: DeleteModalProps) => {
   
   if (!active) return null;
 

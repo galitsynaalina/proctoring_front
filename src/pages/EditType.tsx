@@ -1,7 +1,7 @@
 import api from "../api/api";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../css/create_type.css";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "../css/edit_type.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -10,14 +10,37 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Footer from "../components/Footer";
 
-const CreateType = () => {
+
+interface ProctoringTypeData {
+  id: number;
+  name: string;
+  absencePerson: boolean,
+  extraPerson: boolean,
+  personSubstitution: boolean,
+  lookingAway: boolean,
+  mouthOpening: boolean,
+  hintsOutside: boolean
+}
+
+interface FormData {
+  name: string;
+  absencePerson: boolean,
+  extraPerson: boolean,
+  personSubstitution: boolean,
+  lookingAway: boolean,
+  mouthOpening: boolean,
+  hintsOutside: boolean
+}
+
+const EditType = () => {
+  const username = localStorage.getItem('username');
+  const { id } = useParams<{ id: string }>();
 
   const navigate = useNavigate();
-  const username = localStorage.getItem('username');
 
   const [visible, setVisible] = useState(false);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     absencePerson: false,
     extraPerson: false,
@@ -27,39 +50,52 @@ const CreateType = () => {
     hintsOutside: false
   });
 
-  const handleInputChange = (e) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get<ProctoringTypeData>(`v1/proctoring/ProctoringType/${id}`);
+        const data = response.data;
+
+        setFormData({
+          name: data.name || '',
+          absencePerson: Boolean(data.absencePerson),
+          extraPerson: Boolean(data.extraPerson),
+          personSubstitution: Boolean(data.personSubstitution),
+          lookingAway: Boolean(data.lookingAway),
+          mouthOpening: Boolean(data.mouthOpening),
+          hintsOutside: Boolean(data.hintsOutside)
+        });
+      } catch (error) {
+        console.error('Ошибка при загрузке данных:', error);
+        alert('Не удалось загрузить данные.');
+        navigate('/proctoring-types'); // перенаправление обратно
+      }
+    };
+
+    fetchData();
+  }, [id, navigate]);
+
+  const handleInputChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<any>) => {
     const { name, checked } = e.target;
     setFormData(prev => ({ ...prev, [name]: checked }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSave = async () => {
     try {
-      const response = await api.post('v1/proctoring/proctoringType', formData);
-
-      if (response.status === 201) {
-        setFormData({
-          name: '',
-          absencePerson: false,
-          extraPerson: false,
-          personSubstitution: false,
-          lookingAway: false,
-          mouthOpening: false,
-          hintsOutside: false
-        });
-        navigate("/proctoring-types")
-      }
+      const response = await api.patch<ProctoringTypeData>(`/v1/proctoring/ProctoringType/${id}`, formData);
+      console.log('Данные успешно обновлены:', response.data);
+      alert('Результат успешно сохранён!');
+      navigate('/proctoring-types');
     } catch (error) {
-      console.error('Ошибка при создании записи:', error);
+      console.error('Ошибка при сохранении:', error);
+      alert('Не удалось сохранить результат.');
     }
   };
-
 
   return (
     <div>
@@ -75,7 +111,7 @@ const CreateType = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
@@ -118,7 +154,7 @@ const CreateType = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="page-title">Создание типа</h3>
+        <h3 className="page-title">Редактирование типа</h3>
       </div>
       <div className="div-container-edit">
         <div className="div-content">
@@ -169,7 +205,7 @@ const CreateType = () => {
             <label className="text-checkbox">Подсказки</label>
           </div>
 
-          <Button className="button" onClick={handleSubmit}>Сохранить</Button>
+          <Button className="button" onClick={handleSave}>Сохранить</Button>
         </div>
       </div>
       <div>
@@ -179,4 +215,4 @@ const CreateType = () => {
   );
 };
 
-export default CreateType;
+export default EditType;

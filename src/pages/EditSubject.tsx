@@ -1,7 +1,5 @@
-import api from "../api/api";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../css/create_subject.css";
+import { useState, useRef } from "react";
+import "../css/edit_subject.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -10,38 +8,11 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Footer from "../components/Footer";
 
-const CreateSubject = () => {
+const EditSubject = () => {
 
   const username = localStorage.getItem('username');
-  const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
-
-  const [formData, setFormData] = useState({
-    name: ''
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await api.post('v1/subject', formData);
-
-      if (response.status === 201) {
-        setFormData({
-          name: ''
-        });
-        navigate("/subjects")
-      }
-    } catch (error) {
-      console.error('Ошибка при создании записи:', error);
-    }
-  };
 
   return (
     <div>
@@ -57,7 +28,7 @@ const CreateSubject = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
@@ -100,16 +71,14 @@ const CreateSubject = () => {
         </header>
       </div>
       <div className="div-title">
-        <h3 className="page-title">Создание предмета</h3>
+        <h3 className="page-title">Редактирование предмета</h3>
       </div>
       <div className="div-container-edit">
         <div className="div-content">
           <span className="input-name-active">Название предмета</span>
-          <input className="input-text-active" type="text" name="name"
-            value={formData.name}
-            onChange={handleInputChange} />
+          <input className="input-text-active" type="text" />
 
-          <Button className="button" onClick={handleSubmit}>Сохранить</Button>
+          <Button className="button">Сохранить</Button>
         </div>
       </div>
       <div>
@@ -119,4 +88,4 @@ const CreateSubject = () => {
   );
 };
 
-export default CreateSubject;
+export default EditSubject;

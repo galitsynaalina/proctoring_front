@@ -1,7 +1,7 @@
 import api from "../api/api";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import "../css/edit_user.css";
+import { useNavigate } from "react-router-dom";
+import "../css/create_user.css";
 import "../css/footer.css"
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -9,49 +9,49 @@ import "primereact/resources/primereact.min.css";
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Footer from "../components/Footer";
-import { Dropdown } from "primereact/dropdown";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 
-const EditUser = () => {
-  const { id } = useParams();
+interface RoleData{
+  id: number;
+  name: string;
+}
+
+interface RoleOption {
+  label: string;
+  value: number;
+}
+
+interface FormData {
+  fullName: string;
+  login: string;
+  password: string;
+  roleId: number | null;
+}
+
+const CreateUser = () => {
+
   const navigate = useNavigate();
 
   const username = localStorage.getItem('username');
 
   const [visible, setVisible] = useState(false);
-  const [formData, setFormData] = useState({
+  const [roles, setRoles] = useState<RoleOption[]>([]);
+
+  const [formData, setFormData] = useState<FormData>({
     fullName: '',
     login: '',
     password: '',
     roleId: null
   });
 
-  const [roles, setRoles] = useState([]);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get(`v1/user/${id}`);
-        const data = response.data;
-
-        setFormData({
-          fullName: data.fullName || '',
-          login: data.login || '',
-          password: data.password || '',
-          roleId: Number(data.role?.id) || null
-        });
-      } catch (error) {
-        console.error('Ошибка при загрузке данных:', error);
-        alert('Не удалось загрузить данные.');
-        navigate('/users');
-      }
-    };
-
     const fetchRoles = async () => {
       try {
-        const response = await api.get("v1/role");
-        const formattedRoles = response.data.map(role => ({
+        const response = await api.get<RoleData[]>("v1/role");
+        const formattedRoles: RoleOption[] = response.data.map(role => ({
           label: role.name,
           value: role.id
         }));
@@ -61,16 +61,15 @@ const EditUser = () => {
       }
     };
 
-    fetchData();
     fetchRoles();
-  }, [id, navigate]);
+  }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleConfirmPasswordChange = (e) => {
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setConfirmPassword(value);
 
@@ -81,29 +80,41 @@ const EditUser = () => {
     }
   };
 
-  const handleRoleChange = (e) => {
-    setFormData(prev => ({ ...prev, roleId: Number(e.value) }));
+  const handleRoleChange = (e: DropdownChangeEvent) => {
+    setFormData(prev => ({ ...prev, roleId: e.value }));
   };
 
-  const handleSave = async () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!formData.fullName || !formData.login || !formData.password || !formData.roleId) {
       alert('Заполните все поля');
       return;
     }
 
-    if (formData.password !== confirmPassword && confirmPassword !== '') {
+    if (formData.password !== confirmPassword) {
       setPasswordError('Пароли не совпадают');
       return;
     }
 
-    try {
-      await api.patch(`/v1/user/${id}`, formData);
-      alert('Данные успешно обновлены');
-      navigate('/users');
-    } catch (error) {
-      console.error('Ошибка при сохранении:', error);
-      alert('Не удалось сохранить изменения');
-    }
+    api.post('v1/user', formData)
+      .then((response) => {
+        if (response.status === 201) {
+          setFormData({
+            fullName: '',
+            login: '',
+            password: '',
+            roleId: null
+          });
+          setConfirmPassword('');
+          setPasswordError('');
+          navigate("/users");
+        }
+      })
+      .catch((error) => {
+        console.error('Ошибка при создании пользователя:', error);
+        alert('Не удалось создать пользователя.');
+      });
   };
 
   return (
@@ -112,15 +123,15 @@ const EditUser = () => {
         <header className="header-style">
           <div className="div-container-header">
             <div className="menu-area">
-              <Button className="button-menu" onClick={() => setVisible(true)} />
+              <Button className="button-menu" onClick={() => { setVisible(true) }} />
               <Sidebar visible={visible}
-                onHide={() => setVisible(false)}
+                onHide={() => { setVisible(false) }}
                 content={({ closeIconRef, hide }) => (
                   <div className="min-h-screen flex relative lg:static surface-ground">
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >
@@ -162,37 +173,23 @@ const EditUser = () => {
           </div>
         </header>
       </div>
-
       <div className="div-title">
-        <h3 className="page-title">Редактирование пользователя</h3>
+        <h3 className="page-title">Создание пользователя</h3>
       </div>
-
       <div className="div-container-edit">
         <div className="div-content">
-
           <span className="input-name-active">ФИО</span>
-          <input
-            className="input-text-active"
-            type="text"
-            name="fullName"
+          <input className="input-text-active" type="text" name="fullName"
             value={formData.fullName}
-            onChange={handleInputChange}
-          />
+            onChange={handleInputChange} />
 
           <span className="input-name-active">Логин</span>
-          <input
-            className="input-text-active"
-            type="text"
-            name="login"
+          <input className="input-text-active" type="text" name="login"
             value={formData.login}
-            onChange={handleInputChange}
-          />
+            onChange={handleInputChange} />
 
           <span className="input-name-active">Пароль</span>
-          <input
-            className="input-text-active"
-            type="password"
-            name="password"
+          <input className="input-text-active" type="password" name="password"
             value={formData.password}
             onChange={(e) => {
               setFormData(prev => ({ ...prev, password: e.target.value }));
@@ -201,42 +198,28 @@ const EditUser = () => {
               } else {
                 setPasswordError('');
               }
-            }}
-          />
+            }} />
 
           <span className="input-name-active">Подтверждение пароля</span>
-          <input
-            className="input-text-active"
-            type="password"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
-          />
+          <input className="input-text-active" type="password" name="confirmPassword"
+            onChange={handleConfirmPasswordChange} />
 
-          {passwordError && (
-            <div style={{ color: 'red', marginBottom: '10px' }}>
-              {passwordError}
-            </div>
-          )}
+          {passwordError && <div style={{ color: 'red', marginBottom: '10px', marginLeft: '20px' }}>{passwordError}</div>}
 
           <span className="input-name-active">Роль</span>
-          <Dropdown
-            className="input-text-active"
+          <Dropdown className="input-text-active" type="text"
             value={formData.roleId}
             options={roles}
-            onChange={handleRoleChange}
-            placeholder="Выберите роль"
-            filter
-          />
+            onChange={handleRoleChange} />
 
-          <Button className="button" onClick={handleSave}>Сохранить</Button>
-
+          <Button className="button" onClick={handleSubmit}>Сохранить</Button>
         </div>
       </div>
-
-      <Footer />
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };
 
-export default EditUser;
+export default CreateUser;

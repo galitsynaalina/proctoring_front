@@ -10,17 +10,41 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Footer from "../components/Footer";
 
+interface ResultData {
+  userName: string;
+  subjectName: string;
+  proctoringName: string;
+  detectedAbsencePerson: boolean;
+  detectedExtraPerson: boolean;
+  detectedPersonSubstitution: boolean;
+  detectedLookingAway: boolean;
+  detectedMouthOpening: boolean;
+  detectedHintsOutside: boolean;
+}
+
+interface FormData {
+  userName: string;
+  subjectName: string;
+  proctoringName: string;
+  detectedAbsencePerson: boolean;
+  detectedExtraPerson: boolean;
+  detectedPersonSubstitution: boolean;
+  detectedLookingAway: boolean;
+  detectedMouthOpening: boolean;
+  detectedHintsOutside: boolean;
+}
+
 const EditResults = () => {
 
   const username = localStorage.getItem('username');
 
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     userName: '',
     subjectName: '',
     proctoringName: '',
@@ -35,7 +59,7 @@ const EditResults = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`v1/proctoring-result/${id}`);
+        const response = await api.get<ResultData>(`v1/proctoring-result/${id}`);
         const data = response.data;
 
         setFormData({
@@ -59,19 +83,19 @@ const EditResults = () => {
     fetchData();
   }, [id, navigate]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setFormData(prev => ({ ...prev, [name]: checked }));
   };
 
   const handleSave = async () => {
     try {
-      const response = await api.patch(`/v1/proctoring-result/${id}`, formData);
+      const response = await api.patch<ResultData>(`/v1/proctoring-result/${id}`, formData);
       console.log('Данные успешно обновлены:', response.data);
       alert('Результат успешно сохранён!');
       navigate('/proctoring-results');
@@ -95,7 +119,7 @@ const EditResults = () => {
                     <div id="app-sidebar-2" className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none">
                       <div>
                         <header className="header-style">
-                          <Button type="button" ref={closeIconRef} onClick={(e) => hide(e)} className="button-menu"></Button>
+                          <Button type="button" ref={closeIconRef as React.Ref<Button>} onClick={(e) => hide(e)} className="button-menu"></Button>
                         </header>
                         <div>
                           <a href="/proctoring-results" className="menu-item" >

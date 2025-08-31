@@ -1,22 +1,22 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./pages/Login.js";
-import ProctoringResults from "./pages/ProctoringResults.js";
-import Roles from "./pages/Roles.js";
-import Users from "./pages/Users.js"
-import Subjects from "./pages/Subjects.js";
-import ProctoringTypes from "./pages/ProctoringTypes.js";
-import Proctoring from "./pages/Proctoring.js";
-import EditResults from "./pages/EditResults.jsx";
-import EditRole from "./pages/EditRole.jsx";
-import CreateRole from "./pages/CreateRole.jsx";
-import EditUser from "./pages/EditUser.jsx";
-import CreateUser from "./pages/CreateUser.jsx";
-import EditSubject from "./pages/EditSubject.jsx";
-import CreateSubject from "./pages/CreateSubject.jsx";
-import EditType from "./pages/EditType.jsx";
-import CreateType from "./pages/CreateType.jsx";
-import EditProctoring from "./pages/EditProctoring.jsx";
-import CreateProctoring from "./pages/CreateProctoring.jsx";
+import Login from "./pages/Login";
+import ProctoringResults from "./pages/ProctoringResults";
+import Roles from "./pages/Roles";
+import Users from "./pages/Users"
+import Subjects from "./pages/Subjects";
+import ProctoringTypes from "./pages/ProctoringTypes";
+import Proctoring from "./pages/Proctoring";
+import EditResults from "./pages/EditResults";
+import EditRole from "./pages/EditRole";
+import CreateRole from "./pages/CreateRole";
+import EditUser from "./pages/EditUser";
+import CreateUser from "./pages/CreateUser";
+import EditSubject from "./pages/EditSubject";
+import CreateSubject from "./pages/CreateSubject";
+import EditType from "./pages/EditType";
+import CreateType from "./pages/CreateType";
+import EditProctoring from "./pages/EditProctoring";
+import CreateProctoring from "./pages/CreateProctoring";
 
 
 function App() {
