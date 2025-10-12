@@ -16,7 +16,6 @@ const SidebarMenu = ({ visible, onHide, username }: SidebarMenuProps) => {
             visible={visible}
             onHide={onHide}
             content={({ closeIconRef: sidebarCloseIconRef, hide }) => (
-                <div className="min-h-screen flex relative lg:static surface-ground">
                     <div
                         id="app-sidebar-2"
                         className="surface-section h-screen block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none"
@@ -59,7 +58,6 @@ const SidebarMenu = ({ visible, onHide, username }: SidebarMenuProps) => {
                             <footer className="footer-style" />
                         </div>
                     </div>
-                </div>
             )}
         />
     );

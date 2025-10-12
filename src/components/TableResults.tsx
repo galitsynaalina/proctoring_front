@@ -22,6 +22,7 @@ interface Results {
     detectedLookingAway: boolean;
     detectedMouthOpening: boolean;
     detectedHintsOutside: boolean;
+    reportPdfUrl?: string;
     [key: string]: any;
 }
 
@@ -39,6 +40,7 @@ type PreparedRow = {
     detectedLookingAway: React.ReactNode;
     detectedMouthOpening: React.ReactNode;
     detectedHintsOutside: React.ReactNode;
+    reportPdfUrl?: string;
     [key: string]: any;
 };
 
@@ -65,6 +67,7 @@ const Table = ({ filters }: { filters: Filters }) => {
                 userName: row.userName,
                 subjectName: row.subjectName,
                 proctoringName: row.proctoringName,
+                reportPdfUrl: row.reportPdfUrl || '',
                 detectedAbsencePerson: typeof row.detectedAbsencePerson === "boolean"
                     ? (row.detectedAbsencePerson
                         ? <img src="../images/success.svg" alt="success" />
@@ -99,7 +102,7 @@ const Table = ({ filters }: { filters: Filters }) => {
 
             for (const key in row) {
                 if (Object.prototype.hasOwnProperty.call(row, key)) {
-                    
+
                     if (key in newRow) continue;
 
                     const value = row[key];
@@ -151,6 +154,23 @@ const Table = ({ filters }: { filters: Filters }) => {
         return <button className="button-edit" name="button-edit" onClick={() => navigate(`/edit-proctoring-results/${id}`)} />;
     };
 
+    const pdfReportTemplate = (rowData: PreparedRow) => {
+        if (!rowData.reportPdfUrl) {
+            return <span className="text-gray-400">Нет отчёта</span>;
+        }
+
+        return (
+            <a
+                href={rowData.reportPdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 flex items-center justify-center"
+                title="Скачать отчёт PDF"
+            >
+                <i className="pi pi-file-pdf text-xl"></i>
+            </a>
+        );
+    };
 
     return (
         <div>
@@ -164,6 +184,12 @@ const Table = ({ filters }: { filters: Filters }) => {
                 <Column field="detectedLookingAway" header="Взгляд в сторону" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
                 <Column field="detectedMouthOpening" header="Разговор" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
                 <Column field="detectedHintsOutside" header="Подсказки" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
+                <Column
+                    header="Отчёт PDF"
+                    body={pdfReportTemplate}
+                    headerClassName="table-header-text center-header-text"
+                    bodyClassName="center-column-body"
+                ></Column>
                 <Column style={{ minWidth: '30px' }} body={(rowData) => button_delete(rowData.id)} ></Column>
                 <Column body={(rowData) => button_edit(rowData.id)}></Column>
             </DataTable>

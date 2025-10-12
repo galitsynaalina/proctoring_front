@@ -24,7 +24,7 @@ api.interceptors.response.use(
             localStorage.removeItem("token");
 
             // Перенаправляем на страницу логина
-            window.location.href = "/";  // или "/login", если у тебя такой путь
+            window.location.href = "/";  
         }
         // return Promise.reject(error); // пробрасываем ошибку дальше
     }
