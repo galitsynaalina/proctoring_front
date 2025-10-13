@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -14,7 +14,6 @@ interface Filters {
 
 const Users = () => {
 
-  const closeIconRef = useRef<Button>(null);
   const navigate = useNavigate();
   const username = localStorage.getItem('username');
 
@@ -35,7 +34,7 @@ const Users = () => {
   return (
     <div>
       <div>
-        <header className="bg-[#1B4E9B] h-[71px]  relative">
+        <header className="bg-[#1B4E9B] h-[71px] relative">
           <div className="h-[71px] grid">
             <div className="row-start-1 row-end-2 col-start-1 col-end-2">
               <Button className="w-[38px] h-[38px] bg-transparent border-none cursor-pointer" 
@@ -87,7 +86,8 @@ const Users = () => {
           name="fullName" type="text" placeholder="Поиск по ФИО"
           value={filters.fullName}
           onChange={handleChange} />
-        <Button className="w-[307px] h-[50px] mr-[58px] bg-[#1B4E9B] text-white rounded-full text-[20px] font-montserrat-semibold flex items-center justify-center px-6 transition hover:bg-opacity-90" onClick={() => navigate("/create-user")}>Добавить пользователя</Button>
+        <Button className="w-[307px] h-[50px] mr-[58px] bg-[#1B4E9B] text-white rounded-full text-[20px] font-montserrat-semibold flex items-center justify-center px-6 transition hover:bg-opacity-90"
+        onClick={() => navigate("/create-user")}>Добавить пользователя</Button>
       </div>
       <div className="ml-[58px] mr-[58px] mt-[20px] mb-[32px]">
         <Table filters={filters} />
