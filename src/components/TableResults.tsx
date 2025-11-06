@@ -5,6 +5,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "../css/table.css";
 import DeleteModal from "../pages/DeleteModal";
+import { saveAs } from 'file-saver'; 
 
 interface Filters {
     studentName: string;
@@ -22,7 +23,6 @@ interface Results {
     detectedLookingAway: boolean;
     detectedMouthOpening: boolean;
     detectedHintsOutside: boolean;
-    reportPdfUrl?: string;
     [key: string]: any;
 }
 
@@ -40,7 +40,6 @@ type PreparedRow = {
     detectedLookingAway: React.ReactNode;
     detectedMouthOpening: React.ReactNode;
     detectedHintsOutside: React.ReactNode;
-    reportPdfUrl?: string;
     [key: string]: any;
 };
 
@@ -51,6 +50,8 @@ const Table = ({ filters }: { filters: Filters }) => {
     const [modalActive, setModalActive] = useState(false);
     const [recordIdToDelete, setRecordIdToDelete] = useState<number>(0);
     const [results, setResults] = useState<PreparedRow[]>([]);
+    const [loadingReport, setLoadingReport] = useState<number | null>(null);
+    const [proctoringMap, setProctoringMap] = useState<Record<number, number>>({});
 
     async function fetchResults(): Promise<Results[]> {
         const response = await api.get("v1/proctoring-result");
@@ -58,16 +59,37 @@ const Table = ({ filters }: { filters: Filters }) => {
         return response.data;
     }
 
+    async function fetchProctorings() {
+    try {
+        const response = await api.get('/v1/proctoring');
+        const proctorings = response.data;
+
+        const map: Record<number, number> = {};
+        proctorings.forEach((p: any) => {
+            if (p.resultId) {
+                map[p.resultId] = p.id;
+            }
+        });
+
+        setProctoringMap(map);
+    } catch (error) {
+        console.error('Ошибка при загрузке прокторингов:', error);
+    }
+}
+
     async function prepareResults() {
         const rawResults: RawRow[] = await fetchResults();
         const newResults: PreparedRow[] = [];
 
         for (const row of rawResults) {
+
+            const proctoringId = proctoringMap[row.id]
+            
             const newRow: PreparedRow = {
+                proctoringId: proctoringId,
                 userName: row.userName,
                 subjectName: row.subjectName,
                 proctoringName: row.proctoringName,
-                reportPdfUrl: row.reportPdfUrl || '',
                 detectedAbsencePerson: typeof row.detectedAbsencePerson === "boolean"
                     ? (row.detectedAbsencePerson
                         ? <img src="../images/success.svg" alt="success" />
@@ -131,8 +153,14 @@ const Table = ({ filters }: { filters: Filters }) => {
     };
 
     useEffect(() => {
-        prepareResults()
-    }, [])
+        fetchProctorings(); 
+    }, []);
+
+    useEffect(() => {
+    if (Object.keys(proctoringMap).length > 0) {
+        prepareResults();
+    }
+}, [proctoringMap]);
 
     const filteredResults = results.filter(item => {
         return (
@@ -141,6 +169,30 @@ const Table = ({ filters }: { filters: Filters }) => {
             item.proctoringName.toLowerCase().includes(filters.proctoringName.toLowerCase())
         );
     });
+
+    const downloadReport = async (proctoringId: number, rowIndex: number) => {
+        setLoadingReport(rowIndex);
+        try {
+            const response = await api.get(`v1/proctoring/${proctoringId}/report`, {
+                responseType: 'blob',
+            });
+
+            const contentDisposition = response.headers['content-disposition'];
+            let filename = `proctoring_report_${proctoringId}.pdf`;
+            if (contentDisposition) {
+                const match = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                if (match && match[1]) {
+                    filename = match[1].replace(/['"]/g, '');
+                }
+            }
+
+            saveAs(response.data, filename);
+            } catch (error) {
+            console.error('Ошибка при загрузке отчета:', error);
+        } finally {
+            setLoadingReport(null);
+        }
+    };
 
     const button_delete = (id: number) => {
         return <button className="button-delete" name="button-delete" onClick={() => {
@@ -154,21 +206,25 @@ const Table = ({ filters }: { filters: Filters }) => {
         return <button className="button-edit" name="button-edit" onClick={() => navigate(`/edit-proctoring-results/${id}`)} />;
     };
 
-    const pdfReportTemplate = (rowData: PreparedRow) => {
-        if (!rowData.reportPdfUrl) {
-            return <span className="text-gray-400">Нет отчёта</span>;
-        }
+    const pdfReportTemplate = (rowData: PreparedRow, column: any) => {
+        const rowIndex = results.findIndex(r => r.id === rowData.id);
+        const isDownloading = loadingReport === rowIndex;
 
         return (
-            <a
-                href={rowData.reportPdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 flex items-center justify-center"
-                title="Скачать отчёт PDF"
-            >
-                <i className="pi pi-file-pdf text-xl"></i>
-            </a>
+            <div className="flex justify-center">
+                <button
+                    onClick={() => downloadReport(rowData.proctoringId, rowIndex)}
+                    disabled={isDownloading}
+                    className={`p-2 rounded-full ${isDownloading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+                    title="Скачать отчёт PDF"
+                >
+                    {isDownloading ? (
+                        <i className="pi pi-spin pi-spinner text-xl w-8 h-8  text-blue-600" style={{ fontSize: '32px' }}></i>
+                    ) : (
+                        <i className="pi pi-file-pdf text-xl w-8 h-8 text-red-600 " style={{ fontSize: '32px' }}></i>
+                    )}
+                </button>
+            </div>
         );
     };
 
@@ -182,8 +238,9 @@ const Table = ({ filters }: { filters: Filters }) => {
                 <Column field="detectedExtraPerson" header="Лишний человек" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
                 <Column field="detectedPersonSubstitution" header="Другой человек" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
                 <Column field="detectedLookingAway" header="Взгляд в сторону" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
+                <Column field="detectedHintsOutside" header="Поворот головы" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
                 <Column field="detectedMouthOpening" header="Разговор" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
-                <Column field="detectedHintsOutside" header="Подсказки" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column>
+                {/* <Column field="detectedHintsOutside" header="Подсказки" headerClassName="table-header-text center-header-text" bodyClassName="center-column-body"></Column> */}
                 <Column
                     header="Отчёт PDF"
                     body={pdfReportTemplate}

@@ -52,7 +52,7 @@ const Table = () => {
         for (const row of rawResults) {
             const newRow: PreparedRow = {
                 name: row.name,
-                absencePerson: typeof row.detectedAbsencePerson === "boolean"
+                absencePerson: typeof row.absencePerson === "boolean"
                     ? (row.absencePerson
                         ? <img src="../images/success.svg" alt="success" />
                         : <img src="../images/error.svg" alt="error" />)
@@ -140,8 +140,8 @@ const Table = () => {
                 <Column field="lookingAway" header="Взгляд в сторону" headerClassName="table-header-text"></Column>
                 <Column field="mouthOpening" header="Разговор" headerClassName="table-header-text"></Column>
                 <Column field="hintsOutside" header="Подсказки" headerClassName="table-header-text"></Column>
-                <Column field="" header="" style={{ width: "50px", minWidth: '30px' }} body={(rowData) => button_delete(rowData.id)}></Column>
-                <Column field="" header="" body={(rowData) => button_edit(rowData.id)} style={{ width: "50px" }}></Column>
+                <Column style={{ width: "50px", minWidth: '30px' }} body={(rowData) => button_delete(rowData.id)}></Column>
+                <Column body={(rowData) => button_edit(rowData.id)} style={{ width: "50px" }}></Column>
             </DataTable>
             <DeleteModal active={modalActive} setActive={setModalActive} onConfirm={() => handleDelete(recordIdToDelete)} />
         </div>

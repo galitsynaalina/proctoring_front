@@ -9,7 +9,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     async function auth(){
-        const response = await axios.post("http://localhost:3010/api/v1/authorization/", {login: loginStr, password: passwordStr});
+        const response = await axios.post("http://localhost:8000/api/v1/authorization/", {login: loginStr, password: passwordStr});
 
         const token = response.data.token;
 

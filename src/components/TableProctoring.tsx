@@ -4,64 +4,71 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "../css/table.css"
 
+interface Results {
+    proctoringName: string;
+    userName: string;
+    subjectName: string;
+    resultId: number;
+    // [key: string]: any;
+}
+
 type PreparedRow = {
     proctoringName: string;
-    subjectName: string;
     userName: string;
-    [key: string]: any;
+    subjectName: string;
+    resultId: number;
+    // [key: string]: any;
 };
 
 
 const Table = () => {
 
     const [results, setResults] = useState<PreparedRow[]>([]);
-    async function fetchResults() {
+    async function fetchResults(): Promise<Results[]> {
         const response = await api.get("v1/proctoring");
         console.log(response.data);
         return response.data;
     }
 
-    async function prepareResults() {
+
+    useEffect(() => {
+        async function prepareResults() {
         try {
             const rawResults = await fetchResults();
-
             if (!rawResults || !Array.isArray(rawResults)) {
                 throw new Error('Некорректный формат данных');
             }
-
-            const newResults = rawResults.map(row => ({
-                ...row
-            }));
-
+            const newResults = rawResults.map(row => ({ ...row }));
             setResults(newResults);
             console.log("Обработанные данные:", newResults);
         } catch (error) {
             console.error("Ошибка при подготовке данных:", error);
-            alert("Не удалось загрузить данные таблицы");
             setResults([]);
         }
     }
 
-    useEffect(() => {
-        prepareResults()
+    prepareResults();
     }, [])
 
-    // const results = [
+    // const results: Results[] = [
     //     {
     //         proctoringName: "Основные параметры",
     //         subjectName: "Предмет",
     //         userName: "Администратор",
+    //         resultId: 1
     //     },
     //     {
     //         proctoringName: "Основные параметры",
     //         subjectName: "Машинное обучение",
     //         userName: "Петров Петр",
+    //         resultId: 2
     //     },
     //     ,
     //     {
     //         proctoringName: "Основные параметры",
     //         subjectName: "Предмет",
     //         userName: "Студент",
+    //         resultId: 3
     //     }
     // ];
 
