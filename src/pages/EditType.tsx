@@ -52,7 +52,7 @@ const EditType = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get<ProctoringTypeData>(`v1/proctoring/ProctoringType/${id}`);
+        const response = await api.get<ProctoringTypeData>(`v1/proctoring/proctoringType/${id}`);
         const data = response.data;
 
         setFormData({
@@ -86,7 +86,7 @@ const EditType = () => {
 
   const handleSave = async () => {
     try {
-      const response = await api.patch<ProctoringTypeData>(`/v1/proctoring/ProctoringType/${id}`, formData);
+      const response = await api.patch<ProctoringTypeData>(`/v1/proctoring/proctoringType/${id}`, formData);
       console.log('Данные успешно обновлены:', response.data);
       alert('Результат успешно сохранён!');
       navigate('/proctoring-types');

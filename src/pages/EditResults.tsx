@@ -133,17 +133,17 @@ const EditResults = () => {
           <span className="input-name">ФИО студента</span>
           <input className="input-text" name="userName"
             value={formData.userName}
-            onChange={handleInputChange} type="text" />
+            onChange={handleInputChange} type="text" disabled />
 
           <span className="input-name">Название предмета</span>
           <input className="input-text" name="subjectName"
             value={formData.subjectName}
-            onChange={handleInputChange} type="text" />
+            onChange={handleInputChange} type="text" disabled />
 
           <span className="input-name">Название типа прокторинга</span>
           <input className="input-text" name="proctoringName"
             value={formData.proctoringName}
-            onChange={handleInputChange} type="text" />
+            onChange={handleInputChange} type="text" disabled />
 
           <div className="div-checkbox">
             <input type="checkbox" name="detectedAbsencePerson"

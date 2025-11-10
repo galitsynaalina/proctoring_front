@@ -7,6 +7,7 @@ import "../css/table.css";
 import DeleteModal from "../pages/DeleteModal";
 
 interface ProctoringType {
+    id: number;
     name: string;
     absencePerson: boolean;
     extraPerson: boolean;
@@ -22,6 +23,7 @@ interface RawRow {
 }
 
 type PreparedRow = {
+    id: number;
     name: string;
     absencePerson: React.ReactNode;
     extraPerson: React.ReactNode;
@@ -51,6 +53,7 @@ const Table = () => {
 
         for (const row of rawResults) {
             const newRow: PreparedRow = {
+                id: row.id,
                 name: row.name,
                 absencePerson: typeof row.absencePerson === "boolean"
                     ? (row.absencePerson
@@ -120,14 +123,14 @@ const Table = () => {
     };
 
     const button_delete = (id: number) => {
-        return <button className="button_delete" name="button-delete" onClick={() => {
+        return <button className="button-delete" name="button-delete" onClick={() => {
             setModalActive(true);
             setRecordIdToDelete(id);
         }} />;
     };
 
     const button_edit = (id: number) => {
-        return <button className="button_edit" name="button-edit" onClick={() => navigate(`/edit-type/${id}`)} />;
+        return <button className="button-edit" name="button-edit" onClick={() => navigate(`/edit-type/${id}`)} />;
     };
 
     return (

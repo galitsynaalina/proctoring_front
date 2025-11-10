@@ -12,7 +12,9 @@ interface Filters {
 
 interface Users {
     id: number,
-    fullName: string
+    fullName: string,
+    login: string,
+    roleName: string
 }
 
 
@@ -25,7 +27,7 @@ const Table = ({ filters }: { filters: Filters }) => {
     const [users, setUsers] = useState<Users[]>([]);
 
     async function fetchUsers() {
-        const response = await api.get("/v1/user")
+        const response = await api.get("v1/user")
         console.log(response.data)
         setUsers(response.data)
     }
@@ -52,19 +54,19 @@ const Table = ({ filters }: { filters: Filters }) => {
     });
 
     const buttonDelete = (id: number) => {
-        return <button className="buttonDelete" name="button-delete" onClick={() => {
+        return <button className="button-delete" name="button-delete" onClick={() => {
             setModalActive(true);
             setRecordIdToDelete(id);
         }} />;
     };
 
     const buttonEdit = (id: number) => {
-        return <button className="button-edit" name="button-edit" onClick={() => navigate(`/edit-user/${id}`)} />;
+        return <button className="button-edit" name="button-edit"  type="button" onClick={() => navigate(`/edit-user/${id}`)} />;
     };
 
     return (
         <div>
-            <DataTable stripedRows paginator rows={10} value={filteredResults} tableStyle={{ minWidth: '50rem' }}>
+            <DataTable stripedRows paginator rows={10} value={filteredResults} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                 <Column field="id" header="ID" className="table-text" headerClassName="table-header-text" > </Column>
                 < Column field="fullName" header="ФИО" className="table-text" headerClassName="table-header-text" > </Column>
                 < Column field="login" header="Логин" className="table-text" headerClassName="table-header-text" > </Column>
